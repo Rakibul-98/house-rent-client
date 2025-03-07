@@ -1,9 +1,15 @@
-import { Button } from "@/components/ui/button";
+"use client"
 
-export default function HomePage() {
+import { useUser } from "@/context/UserContext";
+
+const HomePage = () => {
+
+  const {user:loggedInUser} = useUser();
+  console.log(loggedInUser);
   return (
     <div>
-      <Button>Click me</Button>
     </div>
-  )
-}
+  );
+};
+
+export default HomePage;
