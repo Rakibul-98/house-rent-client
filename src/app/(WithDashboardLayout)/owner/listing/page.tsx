@@ -1,0 +1,17 @@
+"use server";
+
+import { getAllListing } from "@/services/Listing";
+import AllListingPage from "./listings/page";
+
+const ListingDashboardPage = async ({searchParams}:{searchParams: Promise<{page: string}>}) => {
+  const {page} = await searchParams;
+  const { data } = await getAllListing(page);
+
+  return (
+    <div>
+      <AllListingPage data={data?.result} />
+    </div>
+  );
+};
+
+export default ListingDashboardPage;

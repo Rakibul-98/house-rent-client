@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+
 import ReCAPTCHA from "react-google-recaptcha";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,17 +20,25 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { loginUser, reCaptchaTokenVerification } from "@/services/AuthService";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { useUser } from "@/context/UserContext";
 
 export default function LoginForm() {
   const form = useForm({
     resolver: zodResolver(loginValidationSchema),
   });
 
+    const searchParams = useSearchParams();
+    const redirect = searchParams.get("redirectPath");
+    const router = useRouter();
   const [reCaptchaStatus, setReCaptchaStatus] = useState(false);
 
   const {
     formState: { isSubmitting },
   } = form;
+
+  const {setIsLoading} = useUser();
 
   const handleReCaptcha = async (value: string | null) => {
     try {
@@ -38,16 +47,23 @@ export default function LoginForm() {
         setReCaptchaStatus(true);
       }
     } catch (err: any) {
-      console.error(err);
+      toast.error(err);
     }
   };
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       const res = await loginUser(data);
+      setIsLoading(true);
       if (res?.success) {
         toast.success(res?.message);
-        console.log(res);
+        form.reset();
+        setReCaptchaStatus(false);
+        if (redirect) {
+          router.push(redirect);
+        } else {
+          router.push("/user-profile");
+        }
       } else {
         toast.error(res?.message);
       }

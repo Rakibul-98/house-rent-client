@@ -1,13 +1,20 @@
-"use client"
+import HeroSection from "@/components/home/heroSection/HeroSection";
+import TestimonialSection from "@/components/home/testimonial/Testimonial";
+import TrendingRentsSection from "@/components/home/trendingRents/TrendingRents";
+import WhyChooseUsSection from "@/components/home/whyChooseUs/WhyChooseUs";
+import { getAllListing } from "@/services/Listing";
 
-import { useUser } from "@/context/UserContext";
+const HomePage = async () => {
 
-const HomePage = () => {
+  const { data } = await getAllListing();
+  console.log(data);
 
-  const {user:loggedInUser} = useUser();
-  console.log(loggedInUser);
   return (
     <div>
+      <HeroSection/>
+      <TrendingRentsSection data={data?.result}/>
+      <TestimonialSection/>
+      <WhyChooseUsSection/>
     </div>
   );
 };

@@ -11,7 +11,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"; // Assuming you have a Select component
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"; // Assuming you have a Select component
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Link from "next/link";
 // import Logo from "@/app/assets/svgs/Logo";
@@ -19,11 +25,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { registrationSchema } from "./registerValidation";
 import { registerUser } from "@/services/AuthService";
+import { useRouter } from "next/navigation";
 
 export default function RegisterForm() {
   const form = useForm({
     resolver: zodResolver(registrationSchema),
   });
+  const router = useRouter();
 
   const {
     formState: { isSubmitting },
@@ -33,11 +41,11 @@ export default function RegisterForm() {
   const passwordConfirm = form.watch("passwordConfirm");
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-
     try {
       const res = await registerUser(data);
       if (res?.success) {
         toast.success(res?.message);
+        router.push("/user-profile");
       } else {
         toast.error(res?.message);
       }

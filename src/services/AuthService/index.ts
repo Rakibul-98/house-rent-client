@@ -15,11 +15,9 @@ export const registerUser = async (userData: FieldValues) => {
       body: JSON.stringify(userData),
     });
     const result = await res.json();
-
     if (result.success) {
       (await cookies()).set("accessToken", result.data.token);
     }
-
     return result;
   } catch (error: any) {
     return Error(error);
@@ -41,15 +39,28 @@ export const loginUser = async (userData: FieldValues) => {
     if (result.success) {
       (await cookies()).set("accessToken", result.data.token);
     }
-
     return result;
   } catch (error: any) {
     return Error(error);
   }
 };
 
+export const getSingleUser = async (userEmail: string) => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/users/${userEmail}`, {
+      headers: {
+        'Authorization': (await cookies()).get("accessToken")!.value,
+      },
+    });
+
+    return res.json();
+  } catch (error: any) {
+    return Error(error);
+  }
+}
+
 export const getCurrentUser = async () => {
-  const accessToken = (await cookies()).get("accessToken")!.value;
+  const accessToken = (await cookies()).get("accessToken")?.value;
   let decodedData = null;
 
   if (accessToken) {
@@ -77,4 +88,8 @@ export const reCaptchaTokenVerification = async (token: string) => {
   } catch (err: any) {
     return Error(err);
   }
+};
+
+export const logout = async () => {
+  (await cookies()).delete("accessToken");
 };

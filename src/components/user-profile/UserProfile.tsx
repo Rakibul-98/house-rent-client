@@ -1,0 +1,302 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { useState } from "react";
+import { Edit, Lock, Save, Trash } from "lucide-react";
+import Image from "next/image";
+import { updatePassword, updateProfile } from "@/services/Profile";
+import { toast } from "sonner";
+import { userType } from "@/types/types";
+import { useRouter } from "next/navigation";
+
+export default function UserProfile({ user }: { user: userType }) {
+  const router = useRouter();
+  const [isEditing, setIsEditing] = useState({
+    user_name: false,
+    profile_image: false,
+    phone_num: false,
+  });
+  const [isChangingPassword, setIsChangingPassword] = useState(false);
+  const [profileImage, setProfileImage] = useState(
+    user?.profile_image || "https://via.placeholder.com/150"
+  );
+
+  const form = useForm({
+    defaultValues: {
+      user_name: user?.user_name || "",
+      profile_image: user?.profile_image || "",
+      phone_num: user?.phone_num || "",
+    },
+  });
+
+  const passwordForm = useForm({
+    defaultValues: {
+      oldPassword: "",
+      newPassword: "",
+    },
+  });
+
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const updatedData = {
+      ...data,
+      profile_image: profileImage,
+      phone_num: user?.phone_num,
+    };
+
+    const res = await updateProfile(updatedData);
+    if (res?.success) {
+      toast.success(res?.message);
+      setIsEditing({
+        user_name: false,
+        profile_image: false,
+        phone_num: false,
+      });
+      form.reset();
+      passwordForm.reset();
+    } else {
+      toast.error(res?.message);
+    }
+    setIsEditing({ user_name: false, profile_image: false, phone_num: false });
+  };
+
+  const onSubmitPassword: SubmitHandler<FieldValues> = async (data) => {
+    console.log("Updated Password:", data);
+    try {
+      const res = await updatePassword(data);
+      if (res?.success) {
+        toast.success(res?.message);
+        setIsChangingPassword(false);
+        passwordForm.reset();
+        router.push('/login');
+      } else {
+        toast.error(res?.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setIsChangingPassword(false);
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfileImage(reader.result as string);
+        setIsEditing((prev) => ({ ...prev, profile_image: true }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleDeleteImage = () => {
+    setProfileImage("https://via.placeholder.com/150");
+    setIsEditing((prev) => ({ ...prev, profile_image: false }));
+  };
+
+  return (
+    <div className="my-10 min-h-[80vh] flex items-center justify-center">
+      <div className="max-w-md w-full p-5">
+        <div className="relative mx-auto w-30 h-30">
+          <Image
+            src={profileImage}
+            height={30}
+            width={30}
+            alt="User Avatar"
+            className="w-full h-full rounded-full border-4 border-black"
+          />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="hidden"
+            id="profile-image-upload"
+          />
+          <label
+            htmlFor="profile-image-upload"
+            className="absolute bottom-1 right-1 bg-black text-white p-1 rounded-full cursor-pointer"
+          >
+            {profileImage ? (
+              <Trash size={16} onClick={handleDeleteImage} />
+            ) : (
+              <Edit size={16} />
+            )}
+          </label>
+        </div>
+
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="mt-4 space-y-4"
+          >
+            <FormField
+              control={form.control}
+              name="user_name"
+              render={({ field }) => (
+                <FormItem className="flex items-center">
+                  <FormLabel className="font-bold">Name:</FormLabel>
+                  <div className="flex items-center justify-between gap-2 w-full">
+                    {isEditing.user_name ? (
+                      <FormControl>
+                        <Input
+                          type="text"
+                          {...field}
+                          placeholder="Enter user name"
+                        />
+                      </FormControl>
+                    ) : (
+                      <span className="w-full">{user.user_name}</span>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setIsEditing((prev) => ({
+                          ...prev,
+                          user_name: !prev.user_name,
+                        }))
+                      }
+                    >
+                      <Edit className="text-gray-500" />
+                    </button>
+                  </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="phone_num"
+              render={({ field }) => (
+                <FormItem className="flex items-center">
+                  <FormLabel className="font-bold">Phone:</FormLabel>
+                  <div className="flex items-center justify-between gap-2 w-full">
+                    {isEditing.phone_num ? (
+                      <FormControl>
+                        <Input
+                          type="text"
+                          {...field}
+                          placeholder="Enter phone number"
+                        />
+                      </FormControl>
+                    ) : (
+                      <span className="w-full">{user.phone_num}</span>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setIsEditing((prev) => ({
+                          ...prev,
+                          phone_num: !prev.phone_num,
+                        }))
+                      }
+                    >
+                      <Edit className="text-gray-500" />
+                    </button>
+                  </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <div className="text-left space-y-2 text-gray-700">
+              <p>
+                <strong>Email:</strong> {user.email}
+              </p>
+              <p>
+                <strong>Role:</strong> {user.role}
+              </p>
+              <p>
+                <strong>Status:</strong>{" "}
+                {user?.isBlocked ? (
+                  <span className="text-red-500">Blocked</span>
+                ) : (
+                  <span className="text-green-500">Active</span>
+                )}
+              </p>
+            </div>
+
+            {(isEditing.user_name ||
+              isEditing.profile_image ||
+              isEditing.phone_num) && (
+              <Button type="submit" className="w-full mt-4">
+                <Save className="mr-2" />
+                Save Changes
+              </Button>
+            )}
+          </form>
+        </Form>
+
+        <div className="mt-6">
+          <Button
+            onClick={() => setIsChangingPassword(!isChangingPassword)}
+            className="w-full"
+          >
+            <Lock className="mr-2" />
+            Change Password
+          </Button>
+
+          {isChangingPassword && (
+            <Form {...passwordForm}>
+              <form
+                onSubmit={passwordForm.handleSubmit(onSubmitPassword)}
+                className="mt-4 space-y-4"
+              >
+                <FormField
+                  control={passwordForm.control}
+                  name="oldPassword"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Old Password</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="password"
+                          {...field}
+                          placeholder="Old Password"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={passwordForm.control}
+                  name="newPassword"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>New Password</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="password"
+                          {...field}
+                          placeholder="New Password"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <Button type="submit" className="w-full">
+                  <Save className="mr-2" />
+                  Change Password
+                </Button>
+              </form>
+            </Form>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
