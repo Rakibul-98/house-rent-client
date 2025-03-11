@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -8,15 +7,15 @@ import successImg from "../../assets/gif/paymentSuccess.gif";
 import { useEffect } from "react";
 import { verifyPayment } from "@/services/payment";
 import { toast } from "sonner";
+import { Suspense } from "react";
 
-const PaymentSuccessPage = () => {
+const PaymentSuccessPageContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
   useEffect(() => {
     const orderIdFromParams = searchParams.get("order_id");
     if (orderIdFromParams) {
-
       const verifyPaymentAsync = async () => {
         try {
           const res = await verifyPayment(orderIdFromParams);
@@ -61,6 +60,14 @@ const PaymentSuccessPage = () => {
         </Button>
       </div>
     </div>
+  );
+};
+
+const PaymentSuccessPage = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PaymentSuccessPageContent />
+    </Suspense>
   );
 };
 

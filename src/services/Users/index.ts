@@ -1,7 +1,6 @@
 "use server"
 
 import { revalidateTag } from "next/cache";
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { cookies } from "next/headers";
 
 export const getAllUsers = async () => {

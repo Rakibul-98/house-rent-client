@@ -2,7 +2,7 @@ import AllRequestsPage from '@/components/modules/request/all-requests/AllReques
 import { getAllRequests } from '@/services/request';
 import React from 'react';
 
-const AllRequestsDashboardPage = async ({searchParams}:{searchParams: Promise<{page: string}>}) => {
+const page = async ({searchParams}:{searchParams: Promise<{page: string}>}) => {
     const {page} = await searchParams;
     const requests = await getAllRequests(page);
     
@@ -13,4 +13,4 @@ const AllRequestsDashboardPage = async ({searchParams}:{searchParams: Promise<{p
     );
 };
 
-export default AllRequestsDashboardPage;
+export default page;

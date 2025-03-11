@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React from "react";
@@ -184,7 +183,7 @@ const DisplayRequestModal = ({
             <div>
               <p className="text-sm text-gray-500">Created At</p>
               <p className="font-semibold">
-                {new Date(request.createdAt).toLocaleString("en-US", {
+                {new Date(request.createdAt!).toLocaleString("en-US", {
                   month: "short",
                   day: "2-digit",
                   year: "numeric",

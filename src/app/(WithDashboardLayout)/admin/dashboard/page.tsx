@@ -2,7 +2,7 @@ import WelcomePage from "@/components/modules/dashboard/content/WelcomePage";
 import { Settings, User } from "lucide-react";
 import React from "react";
 
-export default function AdminHomePage() {
+const AdminDashboard = () => {
   const content = {
     title: "Admin Dashboard",
     description:
@@ -28,3 +28,6 @@ export default function AdminHomePage() {
     </div>
   );
 }
+
+
+export default AdminDashboard;

@@ -2,7 +2,7 @@ import CreateListingForm from "@/components/modules/listing/create-listing/Creat
 import listingImg from '../../../../../assets/svg/listing.svg';
 import Image from "next/image";
 
-export default function CreateListing() {
+export default function page() {
   return (
     <div className="min-h-screen py-10 flex justify-center gap-10 items-start">
         <CreateListingForm/>

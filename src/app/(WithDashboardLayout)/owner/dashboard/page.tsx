@@ -2,7 +2,7 @@ import WelcomePage from '@/components/modules/dashboard/content/WelcomePage'
 import { FileText, View } from 'lucide-react'
 import React from 'react'
 
-export default function OwnerHomePage() {
+export default function page() {
 
   const content = {
       title: "Manage Your Properties",

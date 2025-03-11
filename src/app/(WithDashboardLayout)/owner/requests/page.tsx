@@ -2,7 +2,7 @@ import AllRequestsPage from '@/components/modules/request/all-requests/AllReques
 import { getAllRequests } from '@/services/request';
 import React from 'react';
 
-const OwnerRequestDashboard = async ({searchParams}:{searchParams: Promise<{page: string}>}) => {
+const page = async ({searchParams}:{searchParams: Promise<{page: string}>}) => {
     const {page} = await searchParams;
     const requests = await getAllRequests(page);    
     return (
@@ -12,4 +12,4 @@ const OwnerRequestDashboard = async ({searchParams}:{searchParams: Promise<{page
     );
 };
 
-export default OwnerRequestDashboard;
+export default page;

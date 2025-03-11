@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -28,7 +27,7 @@ const AllUsersPage = ({ data }: { data: userType[] }) => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [filterRole, setFilterRole] = useState<string>("all");
 
-  const filteredData = data.filter((user) => {
+  const filteredData = data?.filter((user) => {
     const matchesSearch =
       user.user_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       user.email.toLowerCase().includes(searchQuery.toLowerCase());

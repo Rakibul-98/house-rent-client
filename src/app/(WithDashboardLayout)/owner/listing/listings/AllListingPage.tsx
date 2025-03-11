@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -18,13 +17,9 @@ import { Input } from "@/components/ui/input";
 
 const AllListingPage = ({
   data,
-  totalData,
 }: {
   data: listingType[];
-  totalData: number;
 }) => {
-
-  console.log(data);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [isListingModalOpen, setListingModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -34,9 +29,12 @@ const AllListingPage = ({
 
   const { user } = useUser();
   const router = useRouter();
-  const numOfPage = Math.ceil(totalData / 9) || 1;
 
-  const filteredData = data.filter((listing) =>
+  const userListings = data.filter((listing) => listing.owner.email === user?.email);
+  console.log(userListings);
+  const numOfPage = Math.ceil(userListings.length / 9);
+
+  const filteredData = userListings.filter((listing) =>
     listing.rentalHouseLocation.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
