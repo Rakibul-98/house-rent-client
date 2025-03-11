@@ -7,6 +7,11 @@ import { getAllListing } from "@/services/Listing";
 const HomePage = async () => {
 
   const { data } = await getAllListing();
+  
+  if(!data?.result){
+    console.error("No data found");
+    return null;
+  }
 
   return (
     <div>

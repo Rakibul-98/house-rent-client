@@ -43,17 +43,21 @@ House Finder is a modern, responsive platform for finding and listing homes, fea
 - 
 ## Live Demo
 
-[Live Demo]()
+[Live Demo](https://house-rent-client.onrender.com//)
 
 ## Screenshots
 
-![Homepage](
+![Homepage](https://i.ibb.co.com/Lzf71z7w/hr-banner.png
 )
-![products](
+![listing](https://i.ibb.co.com/5XkQwRWP/listin-details.png
 )
-![Admin panel](
+![userProfile](https://i.ibb.co.com/8gngQ4qx/user-profile.png
 )
-![Reports](
+![Admin panel](https://i.ibb.co.com/Vp069bH9/admin-dashboard.png
+)
+![Admin panel2](https://i.ibb.co.com/4nqMChyk/dashboard-2.png
+)
+![create](https://i.ibb.co.com/9HQWdVXK/create-listing.png
 )
 
 
@@ -69,12 +73,12 @@ Follow these steps to set up the project locally:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Rakibul-98/house-finder.git
+   git clone https://github.com/Rakibul-98/house-rent-client.git
    ```
 
 2. Navigate to the project directory:
    ```bash
-   cd house-finder
+   cd house-rent-client
    ```
 
 3. Install dependencies:
