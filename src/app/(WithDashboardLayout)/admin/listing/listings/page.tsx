@@ -34,7 +34,7 @@ const AllListingPage = ({
 
   const { user } = useUser();
   const router = useRouter();
-  const numOfPage = Math.ceil(totalData / 9);
+  const numOfPage = Math.ceil(totalData / 9) || 1;
 
   const filteredData = data.filter((listing) =>
     listing.rentalHouseLocation.toLowerCase().includes(searchQuery.toLowerCase())
@@ -55,7 +55,6 @@ const AllListingPage = ({
     try {
       if (selectedId) {
         const res = await deleteListing(selectedId);
-        console.log(res);
         if (res.success) {
           toast.success(res.message);
           setDeleteModalOpen(false);
