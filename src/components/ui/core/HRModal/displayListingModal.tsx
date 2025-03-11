@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import Image from "next/image";
 import { listingType } from "@/types/types";
+import { Bed, Coins, MailPlus, MapPin, User2Icon, Zap } from "lucide-react";
 
 interface ListingModalProps {
   isOpen: boolean;
@@ -45,7 +46,7 @@ const DisplayListingModal = ({ isOpen, onClose, listing }: ListingModalProps) =>
                 src={image}
                 alt={`Listing Image ${index + 1}`}
                 fill
-                className="object-cover"
+                className="object-cover bg-gray-50"
               />
             </div>
           ))}
@@ -54,16 +55,17 @@ const DisplayListingModal = ({ isOpen, onClose, listing }: ListingModalProps) =>
         <div className="mt-2 space-y-2">
         <p>{listing?.house_description}</p>
             <div className="md:flex justify-between">
-            <p><strong>Location:</strong> {listing?.rentalHouseLocation}</p>
-            <p><strong>Rent:</strong> ${listing?.rentAmount}</p>
+            <p className="flex gap-2"><strong><MapPin/></strong> {listing?.rentalHouseLocation}</p>
+            <p className="flex gap-2"><strong><Coins/></strong> ${listing?.rentAmount}</p>
             </div>
           
-          <p><strong>Bedrooms:</strong> {listing?.numberOfBedrooms}</p>
+          <p className="flex gap-2"><strong><Bed/></strong> <span className="font-bold bg-gray-100 rounded-full px-5">{listing?.numberOfBedrooms}</span></p>
           
-          <p><strong>Features:</strong> {listing?.features.join(", ")}</p>
+          <p className="flex gap-2"><strong><Zap/></strong> <span className="">{listing?.features.join(", ")}</span></p>
+
           <div className="md:flex justify-between">
-          <p><strong>Owner:</strong> {listing?.owner.user_name}</p>
-          <p><strong>Contact:</strong> {listing?.owner.email}</p>
+          <p className="flex gap-2"><strong><User2Icon/></strong> {listing?.owner.user_name}</p>
+          <p className="flex gap-2"><strong><MailPlus/></strong> {listing?.owner.email}</p>
             </div>
           
         </div>

@@ -7,7 +7,6 @@ import { getAllListing } from "@/services/Listing";
 const HomePage = async () => {
 
   const { data } = await getAllListing();
-  console.log(data);
 
   return (
     <div>

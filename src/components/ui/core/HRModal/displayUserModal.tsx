@@ -22,7 +22,7 @@ const DisplayUserModal = ({ isOpen, onClose, user }: UserDataModalProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent className="max-w-sm">
         <DialogHeader>
           <DialogTitle className="font-semibold">
             User Details of {user.user_name}
@@ -31,13 +31,13 @@ const DisplayUserModal = ({ isOpen, onClose, user }: UserDataModalProps) => {
 
         <div className="space-y-4">
           <div className="flex justify-center">
-            <div className="relative w-24 h-24 rounded-full overflow-hidden">
+            <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-green-500">
               <Image
                 height={100}
                 width={100}
                 src={user.profile_image || "https://via.placeholder.com/150"}
                 alt="Profile Image"
-                className="object-cover bg-gray-100"
+                className="object-cover bg-gray-100 "
               />
             </div>
           </div>
@@ -53,7 +53,7 @@ const DisplayUserModal = ({ isOpen, onClose, user }: UserDataModalProps) => {
             <div className="flex items-center gap-3">
               <Shield className="w-6 h-6 text-purple-500" />
               <div>
-                <p className="font-semibold">{user.role}</p>
+                <p className="font-semibold capitalize">{user.role}</p>
               </div>
             </div>
 
@@ -92,7 +92,7 @@ const DisplayUserModal = ({ isOpen, onClose, user }: UserDataModalProps) => {
               <Lock className="w-6 h-6 text-red-500" />
               <div>
                 <div className="flex gap-2">
-                  <Badge variant={user.isBlocked ? "destructive" : "default"}>
+                  <Badge className={`${user.isBlocked ? "bg-red-500" : "bg-green-500"}`} >
                     {user.isBlocked ? "Blocked" : "Active"}
                   </Badge>
                 </div>

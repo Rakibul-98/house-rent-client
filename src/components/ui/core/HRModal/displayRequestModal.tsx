@@ -17,6 +17,7 @@ import {
   CreditCard,
   Calendar,
   AlertCircle,
+  CreditCardIcon,
 } from "lucide-react";
 import { useUser } from "@/context/UserContext";
 import { Button } from "../../button";
@@ -66,7 +67,7 @@ const DisplayRequestModal = ({
         </DialogHeader>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-gray-50 p-4 rounded-lg">
+          <div className=" p-4 rounded-lg shadow-lg border">
             <div className="flex items-center gap-3">
               <User className="w-6 h-6 text-blue-500" />
               <div>
@@ -77,19 +78,17 @@ const DisplayRequestModal = ({
           </div>
 
           {user?.role === "tenant" ? (
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <div className="flex items-center gap-3">
-                <Button
-                  disabled={request.paymentStatus !== "active"}
-                  onClick={() => handlePayment(request._id)}
-                  className="w-full"
-                >
-                  Make payment
-                </Button>
-              </div>
+            <div className="shadow-lg border rounded-lg flex justify-center items-center px-8 py-4">
+              <Button
+                disabled={request.paymentStatus !== "active"}
+                onClick={() => handlePayment(request._id)}
+                className="w-full h-full border hover:bg-transparent cursor-pointer hover:text-black"
+              >
+                Make payment <CreditCardIcon />
+              </Button>
             </div>
           ) : (
-            <div className="bg-gray-50 p-4 rounded-lg">
+            <div className="shadow-lg border p-4 rounded-lg">
               <div className="flex items-center gap-3">
                 <Phone className="w-6 h-6 text-green-500" />
                 <div>
@@ -100,7 +99,7 @@ const DisplayRequestModal = ({
             </div>
           )}
 
-          <div className="bg-gray-50 p-4 rounded-lg col-span-2">
+          <div className="shadow-lg border p-4 rounded-lg col-span-2">
             <div className="flex items-center gap-3">
               <MessageSquare className="w-6 h-6 text-purple-500" />
               <div>
@@ -110,7 +109,7 @@ const DisplayRequestModal = ({
             </div>
           </div>
 
-          <div className="bg-gray-50 p-4 rounded-lg">
+          <div className="shadow-lg border p-4 rounded-lg">
             <div className="flex items-center gap-3">
               <User className="w-6 h-6 text-blue-500" />
               <div>
@@ -122,7 +121,7 @@ const DisplayRequestModal = ({
             </div>
           </div>
 
-          <div className="bg-gray-50 p-4 rounded-lg">
+          <div className="shadow-lg border p-4 rounded-lg">
             <div className="flex items-center gap-3">
               <Phone className="w-6 h-6 text-green-500" />
               <div>
@@ -138,45 +137,41 @@ const DisplayRequestModal = ({
             </div>
           </div>
 
-          <div className="bg-gray-50 p-4 rounded-lg">
+          <div className="shadow-lg border p-4 rounded-lg">
             <div className="flex items-center gap-3">
               <CreditCard className="w-6 h-6 text-orange-500" />
               <div>
                 <p className="text-sm text-gray-500">Payment Status</p>
                 <Badge
-                  variant={
-                    request.paymentStatus === "active"
-                      ? "default"
-                      : "destructive"
-                  }
+                className={`${request.paymentStatus === "active"
+                  ? "bg-green-500"
+                  : "bg-red-500"} px-5`}
                 >
-                  {request.paymentStatus}
+                  <span className="uppercase text-white">{request.paymentStatus}</span>
                 </Badge>
               </div>
             </div>
           </div>
 
-          <div className="bg-gray-50 p-4 rounded-lg">
+          <div className="shadow-lg border p-4 rounded-lg">
             <div className="flex items-center gap-3">
               <AlertCircle className="w-6 h-6 text-red-500" />
               <div>
                 <p className="text-sm text-gray-500">Request Status</p>
                 <Badge
-                  variant={
-                    request.requestStatus === "approved"
-                      ? "default"
-                      : request.requestStatus === "pending"
-                      ? "secondary"
-                      : "destructive"
-                  }
+                className={`${request.requestStatus === "approved"
+                  ? "bg-green-500"
+                  : request.requestStatus === "pending"
+                  ? "bg-gray-500"
+                  : "bg-red-500"} px-5`}
                 >
-                  {request.requestStatus}
+                  <span className="uppercase text-white">{request.requestStatus}</span>
                 </Badge>
               </div>
             </div>
           </div>
 
-          <div className="bg-gray-50 p-4 rounded-lg flex items-center gap-3">
+          <div className="shadow-lg border p-4 rounded-lg flex items-center gap-3">
             <CreditCard className="w-6 h-6 text-teal-500" />
             <div>
               <p className="text-sm text-gray-500">Total Amount</p>
@@ -184,7 +179,7 @@ const DisplayRequestModal = ({
             </div>
           </div>
 
-          <div className="bg-gray-50 p-4 rounded-lg flex items-center gap-3">
+          <div className="shadow-lg border p-4 rounded-lg flex items-center gap-3">
             <Calendar className="w-6 h-6 text-pink-500" />
             <div>
               <p className="text-sm text-gray-500">Created At</p>

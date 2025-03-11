@@ -13,7 +13,7 @@ const testimonials = [
     role: "Tenant",
     comment:
       "This platform made finding my dream home so easy! The listings are accurate, and the process is seamless.",
-    avatar: "/avatar1.jpg", // Replace with your image path
+    avatar: "https://i.ibb.co.com/5g8hrfBv/male-user-4.png",
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ const testimonials = [
     role: "Property Owner",
     comment:
       "Listing my property was a breeze, and I found a great tenant within days. Highly recommend!",
-    avatar: "/avatar2.jpg", // Replace with your image path
+    avatar: "https://i.ibb.co.com/KjQ6pm6g/fem-user-2.png",
   },
   {
     id: 3,
@@ -29,7 +29,7 @@ const testimonials = [
     role: "Tenant",
     comment:
       "The search filters are fantastic, and the customer support team is very responsive. Great experience!",
-    avatar: "/avatar3.jpg", // Replace with your image path
+    avatar: "https://i.ibb.co.com/c5j3Tt7/male-user-6.png",
   },
   {
     id: 4,
@@ -37,21 +37,19 @@ const testimonials = [
     role: "Property Owner",
     comment:
       "I love how user-friendly the platform is. It saved me so much time and effort in managing my rentals.",
-    avatar: "/avatar4.jpg", // Replace with your image path
+    avatar: "https://i.ibb.co.com/8DZR4nvS/fem-user-1.png",
   },
 ];
 
 export default function TestimonialCarousel() {
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16">
       <div className="container mx-auto px-4">
-        {/* Section Heading */}
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-10">
           What Our Users Say
         </h2>
 
-        {/* Swiper Carousel */}
         <Swiper
           modules={[Autoplay, Pagination]}
           slidesPerView={1}
@@ -61,7 +59,7 @@ export default function TestimonialCarousel() {
           {testimonials.map((testimonial) => (
             <SwiperSlide key={testimonial.id}>
               <div className="text-center">
-                <Avatar className="w-16 h-16 mx-auto mb-4">
+                <Avatar className="w-18 h-18 mx-auto mb-2">
                   <AvatarImage src={testimonial.avatar} alt={testimonial.name} />
                   <AvatarFallback>{testimonial.name[0]}</AvatarFallback>
                 </Avatar>

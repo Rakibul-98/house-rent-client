@@ -1,16 +1,15 @@
 // import Logo from "@/app/assets/svgs/Logo";
-import { Facebook, Instagram, X } from "lucide-react";
+import { Facebook, Instagram, MapPinHouse, X } from "lucide-react";
 import Link from "next/link";
 
 const Footer = () => {
   const navLinks = [
     { href: "/", label: "Home" },
-    { href: "/shop", label: "Shop" },
-    { href: "/products", label: "App Products" },
+    { href: "/listings", label: "Rentals" },
     { href: "/about", label: "About Us" },
-    { href: "/testimonial", label: "Testimonial" },
-    { href: "/blogs", label: "Blogs" },
-    { href: "/contact", label: "Contact Us" },
+    { href: "#test", label: "Testimonial" },
+    { href: "#blog", label: "Blogs" },
+    { href: "#contact", label: "Contact Us" },
   ];
 
   const socialLinks = [
@@ -24,13 +23,12 @@ const Footer = () => {
         <div className="flex flex-col items-center mb-6">
           <div className="flex items-center space-x-2">
             <h1 className="text-2xl font-black flex items-center">
-              {/* <Logo /> */}
+            <MapPinHouse className="size-9 text-[#e54838] "/>
               House Finder
             </h1>
           </div>
           <p className="text-gray-600 mt-3 w-1/2">
-            Save big this Black Friday with unbeatable deals on tech, home
-            essentials, fashion, and more! Limited stock.
+          Our house rental service offers a seamless experience with thousands of verified listings, flexible pricing, and secure transactions.
           </p>
         </div>
 

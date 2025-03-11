@@ -20,16 +20,16 @@ export default function WelcomePage({content}:{content:ContentType}) {
   const { user } = useUser(); 
 
   return (
-    <div className="min-h-[calc(100vh-150px)] flex flex-col items-center justify-center p-6">
+    <div className="min-h-[calc(100vh-100px)] flex flex-col items-center justify-center p-6 bg-gray-100 rounded-xl">
       <div className="text-center mb-8 flex flex-col items-center">
         {
           user? (
             <Image
               src={user?.profile_image}
-              height={100}
-              width={100}
+              height={120}
+              width={120}
               alt="User Avatar"
-              className="rounded-full border-4 border-black"
+              className="rounded-full border-4 border-green-600"
             />
           ) : (
             <div className="w-10 h-10 rounded-full bg-gray-100"></div>
@@ -44,7 +44,7 @@ export default function WelcomePage({content}:{content:ContentType}) {
         {content.actions.map((action, index) => (
           <div
             key={index}
-            className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow flex flex-col items-center text-center"
+            className="500 p-6 rounded-lg border hover:shadow-lg transition-shadow flex flex-col items-center text-center"
           >
             <div className="text-blue-500 mb-4">{action.icon}</div>
             <h2 className="text-xl font-semibold mb-2">{action.title}</h2>

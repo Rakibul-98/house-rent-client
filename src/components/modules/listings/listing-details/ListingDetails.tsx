@@ -14,6 +14,7 @@ import { listingType } from "@/types/types";
 import { useUser } from "@/context/UserContext";
 import CreateRequestModal from "../../request/create-request/CreateRequestForm";
 import { useState } from "react";
+import { FileText, Info, MessageCircle, Send } from "lucide-react";
 
 const ListingDetails = ({ listing }: { listing?: listingType }) => {
   const { user } = useUser();
@@ -30,12 +31,16 @@ const ListingDetails = ({ listing }: { listing?: listingType }) => {
         <h1 className="text-3xl font-bold mb-4 lg:mb-0">
           {listing?.house_description?.split(" ").slice(0, 4).join(" ")}...
         </h1>
-        <Badge variant={listing?.isAvailable ? "default" : "destructive"}>
+        <Badge
+          className={`${
+            listing?.isAvailable ? "bg-green-500" : "bg-red-500"
+          } font-semibold`}
+        >
           {listing?.isAvailable ? "Available" : "Not Available"}
         </Badge>
       </div>
 
-      <div className="mb-8">
+      <div className="mb-8 border rounded-lg">
         <Carousel className="w-full max-w-4xl mx-auto ">
           <CarouselContent>
             {listing?.rentalImages.map((image, index) => (
@@ -58,8 +63,11 @@ const ListingDetails = ({ listing }: { listing?: listingType }) => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold mb-4">Property Details</h2>
+          <div className="bg-white p-6 rounded-lg shadow-md border">
+            <h2 className="text-xl font-semibold mb-4 flex gap-2">
+              <FileText />
+              Property Details
+            </h2>
             <div className="space-y-4">
               <div className="flex items-center gap-4">
                 <span className="font-medium">Location:</span>
@@ -86,14 +94,17 @@ const ListingDetails = ({ listing }: { listing?: listingType }) => {
             </div>
           </div>
 
-          <div className="mt-8 bg-white p-6 rounded-lg shadow-md">
+          <div className="mt-8 bg-white p-6 rounded-lg shadow-md border">
             <h2 className="text-xl font-semibold mb-4">Description</h2>
             <p className="text-gray-600">{listing?.house_description}</p>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold mb-4">Contact Owner</h2>
+        <div className="bg-white p-6 rounded-lg shadow-md border">
+          <h2 className="text-xl font-semibold mb-4 flex gap-2">
+            <MessageCircle />
+            Contact Owner
+          </h2>
           <div className="space-y-4">
             <div className="flex items-center gap-4">
               <span className="font-medium">Name:</span>
@@ -107,6 +118,9 @@ const ListingDetails = ({ listing }: { listing?: listingType }) => {
               <span className="font-medium">Phone:</span>
               <span>**********</span>
             </div>
+            <small className="italic text-red-500">
+              ** You can see owner phone number only after your request gets approved. **
+            </small>
           </div>
 
           {user && user.role === "tenant" && (
@@ -115,7 +129,7 @@ const ListingDetails = ({ listing }: { listing?: listingType }) => {
                 onClick={() => handleRequest(listing?._id)}
                 className="w-full"
               >
-                Request to Rent
+                Request to Rent <Send />
               </Button>
               <Button variant="outline" className="w-full">
                 Save Listing
@@ -125,8 +139,11 @@ const ListingDetails = ({ listing }: { listing?: listingType }) => {
         </div>
       </div>
 
-      <div className="mt-8 bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-xl font-semibold mb-4">Additional Information</h2>
+      <div className="mt-8 bg-white p-6 rounded-lg shadow-md border">
+        <h2 className="text-xl font-semibold mb-4 flex gap-2">
+          <Info />
+          Additional Information
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <h3 className="font-medium mb-2">Nearby Amenities</h3>

@@ -12,12 +12,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
-import { Edit, Lock, Save, Trash } from "lucide-react";
+import { Edit, Edit3, Lock, Save, Trash, X } from "lucide-react";
 import Image from "next/image";
 import { updatePassword, updateProfile } from "@/services/Profile";
 import { toast } from "sonner";
 import { userType } from "@/types/types";
 import { useRouter } from "next/navigation";
+import { Badge } from "../ui/badge";
+import profileBannerImg from '../../assets/svg/profileBannerImg.svg';
 
 export default function UserProfile({ user }: { user: userType }) {
   const router = useRouter();
@@ -69,6 +71,10 @@ export default function UserProfile({ user }: { user: userType }) {
     setIsEditing({ user_name: false, profile_image: false, phone_num: false });
   };
 
+  const {
+    formState: { isSubmitting },
+  } = form;
+
   const onSubmitPassword: SubmitHandler<FieldValues> = async (data) => {
     console.log("Updated Password:", data);
     try {
@@ -105,15 +111,16 @@ export default function UserProfile({ user }: { user: userType }) {
   };
 
   return (
-    <div className="my-10 min-h-[80vh] flex items-center justify-center">
-      <div className="max-w-md w-full p-5">
+    <div className="my-10 min-h-[80vh] flex items-center justify-center gap-10">
+      <Image className="hidden lg:block" src={profileBannerImg} alt="House Rent Logo" width={500} height={500} />
+      <div className="max-w-sm w-full p-5 shadow-2xl rounded-lg">
         <div className="relative mx-auto w-30 h-30">
           <Image
             src={profileImage}
             height={30}
             width={30}
             alt="User Avatar"
-            className="w-full h-full rounded-full border-4 border-black"
+            className="w-full h-full rounded-full border-4 border-teal-500"
           />
           <input
             type="file"
@@ -124,7 +131,7 @@ export default function UserProfile({ user }: { user: userType }) {
           />
           <label
             htmlFor="profile-image-upload"
-            className="absolute bottom-1 right-1 bg-black text-white p-1 rounded-full cursor-pointer"
+            className="absolute bottom-1 right-1 bg-teal-600 text-white p-1 rounded-full cursor-pointer"
           >
             {profileImage ? (
               <Trash size={16} onClick={handleDeleteImage} />
@@ -166,7 +173,11 @@ export default function UserProfile({ user }: { user: userType }) {
                         }))
                       }
                     >
-                      <Edit className="text-gray-500" />
+                      {
+                        isEditing.user_name
+                         ? <X />
+                          : <Edit3 />
+                      }
                     </button>
                   </div>
                   <FormMessage />
@@ -201,7 +212,11 @@ export default function UserProfile({ user }: { user: userType }) {
                         }))
                       }
                     >
-                      <Edit className="text-gray-500" />
+                      {
+                        isEditing.phone_num
+                         ? <X />
+                          : <Edit3 />
+                      }
                     </button>
                   </div>
                   <FormMessage />
@@ -213,15 +228,15 @@ export default function UserProfile({ user }: { user: userType }) {
               <p>
                 <strong>Email:</strong> {user.email}
               </p>
-              <p>
+              <p className="capitalize">
                 <strong>Role:</strong> {user.role}
               </p>
               <p>
-                <strong>Status:</strong>{" "}
+                <strong className="me-2">Status:</strong>{" "}
                 {user?.isBlocked ? (
-                  <span className="text-red-500">Blocked</span>
+                  <Badge className="outline-red-500 text-white outline bg-red-500">Blocked</Badge>
                 ) : (
-                  <span className="text-green-500">Active</span>
+                  <Badge className="outline-green-500 text-white outline bg-green-500">Active</Badge>
                 )}
               </p>
             </div>
@@ -231,7 +246,9 @@ export default function UserProfile({ user }: { user: userType }) {
               isEditing.phone_num) && (
               <Button type="submit" className="w-full mt-4">
                 <Save className="mr-2" />
-                Save Changes
+                {
+                  isSubmitting? "Updating..." : "Update"
+                }
               </Button>
             )}
           </form>
@@ -242,8 +259,12 @@ export default function UserProfile({ user }: { user: userType }) {
             onClick={() => setIsChangingPassword(!isChangingPassword)}
             className="w-full"
           >
-            <Lock className="mr-2" />
-            Change Password
+            {
+              isChangingPassword? <X/> : <Lock/>
+            }
+            {
+              isChangingPassword? "Close Change" : "Change Password"
+            }
           </Button>
 
           {isChangingPassword && (
@@ -290,7 +311,9 @@ export default function UserProfile({ user }: { user: userType }) {
 
                 <Button type="submit" className="w-full">
                   <Save className="mr-2" />
-                  Change Password
+                  {
+                    isSubmitting? "Updating..." : "Submit"
+                  }
                 </Button>
               </form>
             </Form>

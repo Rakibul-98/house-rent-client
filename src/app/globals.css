@@ -6,6 +6,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* body{
+  background-color: rgb(253, 252, 252) ;
+} */
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

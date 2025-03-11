@@ -13,7 +13,13 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Edit2, Eye, X } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useUser } from "@/context/UserContext";
 
 const AllRequestsPage = ({
@@ -23,19 +29,21 @@ const AllRequestsPage = ({
   data: requestType[];
   totalData: number;
 }) => {
-
-  const {user} = useUser();
+  const { user } = useUser();
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [isRequestModalOpen, setRequestModalOpen] = useState(false);
   const [isRequestUpdateModalOpen, setRequestUpdateModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedName, setSelectedName] = useState<string | null>(null);
-  const [selectedRequest, setSelectedRequest] = useState<requestType | null>(null);
+  const [selectedRequest, setSelectedRequest] = useState<requestType | null>(
+    null
+  );
   const [filterStatus, setFilterStatus] = useState<string>("all");
 
-  const filteredData = filterStatus === "all"
-    ? data
-    : data.filter((request) => request.requestStatus === filterStatus);
+  const filteredData =
+    filterStatus === "all"
+      ? data
+      : data.filter((request) => request.requestStatus === filterStatus);
 
   const handleView = (data: requestType) => {
     setSelectedRequest(data);
@@ -103,6 +111,17 @@ const AllRequestsPage = ({
     {
       accessorKey: "requestStatus",
       header: "Status",
+      cell: ({ row }) => (
+        <span
+          className={`
+          ${row.original.requestStatus === "pending" && "bg-amber-300"}  
+          ${row.original.requestStatus === "approved" && "bg-green-500"} 
+          ${row.original.requestStatus === "rejected" && "bg-red-500"} px-3 py-1 text-white uppercase rounded-sm
+          `}
+        >
+          {row.original.requestStatus}
+        </span>
+      ),
     },
     {
       accessorKey: "action",
@@ -117,8 +136,8 @@ const AllRequestsPage = ({
             <Eye />
           </Button>
           <>
-          <Button
-          disabled={user?.role === "tenant"}
+            <Button
+              disabled={user?.role === "tenant"}
               variant="ghost"
               className="cursor-pointer rounded-full size-7"
               onClick={() => handleUpdateRequestModal(row.original._id)}
@@ -126,7 +145,6 @@ const AllRequestsPage = ({
               <Edit2 />
             </Button>
             <Button
-            
               variant="ghost"
               className="cursor-pointer rounded-full size-7"
               onClick={() => handleDelete(row.original)}

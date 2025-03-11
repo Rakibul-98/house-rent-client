@@ -1,5 +1,5 @@
 import WelcomePage from '@/components/modules/dashboard/content/WelcomePage'
-import { Building, Home } from 'lucide-react'
+import { FileText, View } from 'lucide-react'
 import React from 'react'
 
 export default function OwnerHomePage() {
@@ -9,13 +9,13 @@ export default function OwnerHomePage() {
       description: "Create, update, and manage your property listings. Track requests and approvals.",
       actions: [
         {
-          icon: <Home  />,
+          icon: <FileText  />,
           title: "Create Listing",
           description: "Add a new property to your listings."
         },
         {
-          icon: <Building  />,
-          title: "View Listings",
+          icon: <View  />,
+          title: "Manage Requests",
           description: "See all your property listings and their status.",
         },
       ],

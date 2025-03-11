@@ -81,7 +81,7 @@ const AllUsersPage = ({ data }: { data: userType[] }) => {
       accessorKey: "isBlocked",
       header: "Blocked",
       cell: ({ row }) => (
-        <div className="flex justify-center">
+        <div className="">
           <Badge
             variant={row.original.isBlocked ? "destructive" : "default"}
             className="px-3 py-1 text-sm"

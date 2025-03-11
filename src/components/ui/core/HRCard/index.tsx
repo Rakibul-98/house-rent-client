@@ -4,6 +4,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { listingType } from "@/types/types";
+import { Building2} from "lucide-react";
 
 interface ListingCardProps {
   listing: listingType;
@@ -23,17 +24,20 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing, onViewDetails }) => 
       </div>
 
       <div className="p-4">
-        <h3 className="text-xl font-semibold mb-2">{listing?.rentalHouseLocation}</h3>
+        <h3 className="text-xl font-semibold mb-2 flex gap-2">
+          <Building2/>
+          {listing?.rentalHouseLocation}</h3>
         <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
           <span>{listing?.numberOfBedrooms} Bedrooms</span>
           <span>•</span>
           <span>${listing?.rentAmount}/mo</span>
         </div>
-        <p className="text-sm text-gray-500 line-clamp-2">{listing?.house_description}</p>
+        <p className="text-sm text-gray-500 line-clamp-2">
+          {listing?.house_description}</p>
       </div>
 
-      <div className="p-4 flex justify-center">
-        <Button variant="outline" className="w-full" onClick={onViewDetails}>
+      <div className="p-4 flex justify-center ">
+        <Button variant="outline" className="w-full cursor-pointer" onClick={onViewDetails}>
           View Details
         </Button>
       </div>

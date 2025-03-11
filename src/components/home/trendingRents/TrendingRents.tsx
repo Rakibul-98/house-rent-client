@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import ListingCard from "@/components/ui/core/HRCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { listingType } from "@/types/types";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -18,11 +19,11 @@ const TrendingRentsSection = ({ data }: { data: listingType[] }) => {
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="flex justify-between">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">
+          <h2 className="text-3xl md:text-2xl font-bold text-center mb-8">
             Trending Rentals
           </h2>
           <Link href="/listings" className=" h-fit">
-            <Button className="cursor-pointer">View All Listing</Button>
+            <Button className="cursor-pointer border hover:bg-transparent hover:text-black">View All Listing <ArrowRight/></Button>
           </Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">

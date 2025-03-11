@@ -71,7 +71,7 @@ const CreateRequestModal = ({
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent>
-        <DialogHeader>
+        <DialogHeader className="mb-5">
           <DialogTitle>Make a request for <span className="italic text-amber-400">{listing.rentalHouseLocation}</span></DialogTitle>
         </DialogHeader>
         <Form {...form}>

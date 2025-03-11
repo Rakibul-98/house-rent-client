@@ -12,17 +12,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  FieldValues,
-  SubmitHandler,
-  useForm,
-} from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { listingValidationSchema } from "./listingValidation";
 import HRImageUploader from "@/components/ui/core/HRImageUploader";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { X } from "lucide-react";
+import { File, FileText, X } from "lucide-react";
 import { toast } from "sonner";
 import { createListing } from "@/services/Listing";
 import { useRouter } from "next/navigation";
@@ -36,7 +32,6 @@ export default function CreateListingForm() {
       features: [],
       rentAmount: 0,
       numberOfBedrooms: 1,
-      // features: [{ value: "" }],
       rentalImages: [],
     },
   });
@@ -55,20 +50,7 @@ export default function CreateListingForm() {
     setValue("rentalImages", imagePreview);
   }, [imagePreview, setValue]);
 
-  // const { append: appendFeature, fields: featureFields } = useFieldArray({
-  //   control: form.control,
-  //   name: "features",
-  // });
-
-  // const addFeature = () => {
-  //   appendFeature({ value: "" });
-  // };
-
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    // const features = data.features.map(
-    //   (feature: { value: string }) => feature.value
-    // );
-
     if (data.rentalImages.length < 1) {
       setImageError(true);
       return;
@@ -90,14 +72,11 @@ export default function CreateListingForm() {
   };
 
   return (
-    <div className="border-2 border-gray-300 rounded-xl flex-grow max-w-md w-full p-5">
-      <div className="flex items-center space-x-4">
-        <div>
-          <h1 className="text-xl font-semibold">Create Listing</h1>
-          <p className="font-extralight text-sm text-gray-600">
-            List your property for rent!
-          </p>
-        </div>
+    <div className="shadow-2xl rounded-xl flex-grow max-w-md w-full p-5">
+      <div className="mb-5">
+        <h1 className="text-xl font-semibold flex gap-2 items-center">
+          <FileText /> List your property for rent!
+        </h1>
       </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -131,43 +110,43 @@ export default function CreateListingForm() {
             )}
           />
 
-          <FormField
-            control={form.control}
-            name="rentAmount"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Rent Amount</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    {...field}
-                    onChange={(e) => field.onChange(Number(e.target.value))}
-                    placeholder="Enter rent amount"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="grid grid-cols-2 gap-5">
+            <FormField
+              control={form.control}
+              name="rentAmount"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Rent Amount</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      onChange={(e) => field.onChange(Number(e.target.value))}
+                      placeholder="Enter rent amount"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <FormField
-            control={form.control}
-            name="numberOfBedrooms"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Bedrooms</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    {...field}
-                    onChange={(e) => field.onChange(Number(e.target.value))}
-                    placeholder="Enter number of bedrooms"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+            <FormField
+              control={form.control}
+              name="numberOfBedrooms"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Bedrooms</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      onChange={(e) => field.onChange(Number(e.target.value))}
+                      placeholder="Enter number of bedrooms"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
           <FormField
             control={form.control}
@@ -187,79 +166,47 @@ export default function CreateListingForm() {
             )}
           />
 
-          {/* <div>
-            <div className="flex justify-between items-center border-t border-b py-3 my-5">
-              <p className="text-primary font-bold text-xl">Features</p>
-              <Button
-                variant="outline"
-                className="size-10"
-                onClick={addFeature}
-                type="button"
-              >
-                <Plus className="text-primary" />
-              </Button>
-            </div>
-
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              {featureFields.map((featureField, index) => (
-                <div key={featureField.id}>
-                  <FormField
-                    control={form.control}
-                    name={`features.${index}.value`}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Feature {index + 1}</FormLabel>
-                        <FormControl>
-                          <Input {...field} value={field.value || ""} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
+          <div className="flex flex-col md:flex-row gap-5">
+            <HRImageUploader
+              setImageFiles={setImageFiles}
+              setImagePreview={setImagePreview}
+              label="Upload Images"
+            />
+            {imagePreview.length < 1 && imageError && (
+              <span className="text-red-500">Image is required!</span>
+            )}
+            {imagePreview.length > 0 &&
+              imagePreview.map((preview, index) => (
+                <div
+                  key={index}
+                  className="relative w-full h-36 md:size-36 rounded-md overflow-hidden border border-dashed border-gray-300"
+                >
+                  <Image
+                    src={preview}
+                    alt="preview"
+                    width={100}
+                    height={100}
+                    className="object-cover w-full h-full"
                   />
+                  <Button
+                    variant="destructive"
+                    onClick={() => {
+                      const newPreview = imagePreview.filter(
+                        (_, i) => i !== index
+                      );
+                      const newFiles = imageFiles.filter((_, i) => i !== index);
+                      setImagePreview(newPreview);
+                      setImageFiles(newFiles);
+                    }}
+                    className="absolute top-0 right-0 rounded-full p-0 size-7 cursor-pointer"
+                  >
+                    <X />
+                  </Button>
                 </div>
               ))}
-            </div>
-          </div> */}
+          </div>
 
-          <HRImageUploader
-            setImageFiles={setImageFiles}
-            setImagePreview={setImagePreview}
-            label="Upload Images"
-          />
-          {imagePreview.length < 1 && imageError && (
-            <span className="text-red-500">Image is required!</span>
-          )}
-          {imagePreview.length > 0 &&
-            imagePreview.map((preview, index) => (
-              <div
-                key={index}
-                className="relative w-36 h-36 rounded-md overflow-hidden border border-dashed border-gray-300"
-              >
-                <Image
-                  src={preview}
-                  alt="preview"
-                  width={100}
-                  height={100}
-                  className="object-cover w-full h-full"
-                />
-                <Button
-                  variant="destructive"
-                  onClick={() => {
-                    const newPreview = imagePreview.filter(
-                      (_, i) => i !== index
-                    );
-                    const newFiles = imageFiles.filter((_, i) => i !== index);
-                    setImagePreview(newPreview);
-                    setImageFiles(newFiles);
-                  }}
-                  className="absolute top-0 right-0 rounded-full p-0 size-7 cursor-pointer"
-                >
-                  <X />
-                </Button>
-              </div>
-            ))}
-
-          <Button type="submit" className="mt-5 w-full" disabled={isSubmitting}>
+          <Button type="submit" className="mt-2 w-full" disabled={isSubmitting}>
             {isSubmitting ? "Creating Listing..." : "Create Listing"}
           </Button>
         </form>

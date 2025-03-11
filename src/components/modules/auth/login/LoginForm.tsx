@@ -23,6 +23,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { useUser } from "@/context/UserContext";
+import { IdCard, KeyRound, MapPinHouse } from "lucide-react";
 
 export default function LoginForm() {
   const form = useForm({
@@ -73,12 +74,11 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="border-2 border-gray-300 rounded-xl flex-grow max-w-md w-full p-5">
-      <div className="flex items-center space-x-4 ">
-        {/* <Logo /> */}
+    <div className=" rounded-xl flex-grow max-w-sm w-full p-5 shadow-2xl">
+      <div className="flex items-center gap-2 mb-5">
+        <MapPinHouse />
         <div>
-          <h1 className="text-xl font-semibold">Login</h1>
-          <p className="font-extralight text-sm text-gray-600">Welcome back!</p>
+          <h1 className="text-xl ">Welcome back! <span className="italic text-blue-600 font-semibold">Login</span> Here</h1>
         </div>
       </div>
       <Form {...form}>
@@ -87,8 +87,8 @@ export default function LoginForm() {
             control={form.control}
             name="email"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
+              <FormItem className="mb-3">
+                <FormLabel><IdCard/> User ID</FormLabel>
                 <FormControl>
                   <Input type="email" {...field} value={field.value || ""} />
                 </FormControl>
@@ -101,7 +101,7 @@ export default function LoginForm() {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel><KeyRound/> Password</FormLabel>
                 <FormControl>
                   <Input type="password" {...field} value={field.value || ""} />
                 </FormControl>
@@ -120,16 +120,16 @@ export default function LoginForm() {
           <Button
             disabled={reCaptchaStatus ? false : true}
             type="submit"
-            className="mt-5 w-full"
+            className="mt-5 w-full cursor-pointer"
           >
             {isSubmitting ? "Logging...." : "Login"}
           </Button>
         </form>
       </Form>
       <p className="text-sm text-gray-600 text-center my-3">
-        Do not have any account ?
-        <Link href="/register" className="text-primary">
-          Register
+        Do not have any account? 
+        <Link href="/register" className=" ms-1 underline text-blue-600 font-semibold italic hover:no-underline">
+          Register Now
         </Link>
       </p>
     </div>

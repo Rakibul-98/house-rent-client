@@ -1,9 +1,7 @@
 "use client";
 
-// import Logo from "@/app/assets/svgs/Logo";
 import Link from "next/link";
 import { Button } from "../ui/button";
-// import { Heart, LogOut } from "lucide-react";
 import { useUser } from "@/context/UserContext";
 import {
   DropdownMenu,
@@ -18,7 +16,7 @@ import { logout } from "@/services/AuthService";
 import { usePathname, useRouter } from "next/navigation";
 import { protectedRoutes } from "@/constant/routes";
 import { toast } from "sonner";
-import { LogOut } from "lucide-react";
+import { LogOut, MapPinHouse } from "lucide-react";
 
 export default function Navbar() {
   const { user, setIsLoading } = useUser();
@@ -36,25 +34,22 @@ export default function Navbar() {
   };
 
   return (
-    <header className=" border-b w-full">
+    <header className="bg-sky-50 w-full">
       <div className="container flex justify-between items-center mx-auto h-16 px-3">
         <Link href="/">
-          <h1 className="text-2xl font-black flex items-center">
-            {/* <Logo /> */}
+          <h1 className="text-2xl flex items-center">
+            <MapPinHouse className="size-9 text-blue-500 "/>
             House Finder
           </h1>
         </Link>
-        <nav className="flex gap-2 items-center">
-          {/* <Button variant="outline" className="rounded-full p-0 size-10">
-            <Heart />
-          </Button> */}
+        <nav className="flex gap-2 items-center font-bold">
           {user?.email ? (
             <>
               <DropdownMenu>
-                <DropdownMenuTrigger className="focus:outline-none cursor-pointer">
-                  <Avatar>
+                <DropdownMenuTrigger className="focus:outline-none cursor-pointer rounded-full border-3 border-green-500">
+                  <Avatar >
                     <AvatarImage src={user.profile_image} />
-                    <AvatarFallback className="font-semibold text-xl">
+                    <AvatarFallback className="font-semibold text-xl bg-green-50">
                       {user.user_name.charAt(0)}
                     </AvatarFallback>
                   </Avatar>
