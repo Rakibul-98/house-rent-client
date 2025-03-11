@@ -14,6 +14,7 @@ const ListingsPage = async ({
 
   return (
     <div>
+      <title>Listings - House Finder</title>
       <AllListings data={data?.result} />
       <TablePagination totalPage={numOfPage} />
     </div>

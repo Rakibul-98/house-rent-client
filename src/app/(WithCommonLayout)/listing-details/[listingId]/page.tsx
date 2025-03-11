@@ -12,6 +12,7 @@ const ListingDetailsPage = async ({
 
   return (
     <div>
+      <title>Details - House Finder</title>
       <ListingDetails listing={listing} />
     </div>
   );

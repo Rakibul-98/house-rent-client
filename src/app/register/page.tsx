@@ -5,6 +5,7 @@ import registerImg from '../../assets/svg/signup.svg';
 export default function RefisterPage() {
   return (
     <div className="min-h-screen flex items-center justify-center gap-10 my-10">
+      <title>Registration - House Finder</title>
       <RegisterForm />
       <Image
         className="hidden lg:block"

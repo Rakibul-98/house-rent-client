@@ -10,6 +10,7 @@ const HomePage = async () => {
 
   return (
     <div>
+      <title>Home - House Finder</title>
       <HeroSection/>
       <TrendingRentsSection data={data?.result}/>
       <TestimonialSection/>

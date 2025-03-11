@@ -23,6 +23,7 @@ export default function AdminHomePage() {
 
   return (
     <div>
+      <title>Dashboard - Admin</title>
       <WelcomePage content={content} />
     </div>
   );

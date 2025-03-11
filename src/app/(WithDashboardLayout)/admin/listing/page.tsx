@@ -9,6 +9,7 @@ const ListingDashboardPage = async ({searchParams}:{searchParams: Promise<{page:
 
   return (
     <div>
+      <title>Dashboard - Admin</title>
       <AllListingPage data={data?.result} totalData={data.totalData} />
     </div>
   );

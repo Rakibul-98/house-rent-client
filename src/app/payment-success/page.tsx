@@ -34,6 +34,7 @@ const PaymentSuccessPage = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
+      <title>Payment Success - House Finder</title>
       <div className="bg-white p-8 rounded-lg shadow-lg text-center max-w-md w-full">
         <div className="flex justify-center">
           <Image

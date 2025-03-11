@@ -9,6 +9,7 @@ const UserProfilePage = async () => {
     const user = await getSingleUser(currentUser?.email);
     return (
         <div>
+            <title>Profile - Home Finder</title>
             <UserProfile user={user.data}/>
         </div>
     );
