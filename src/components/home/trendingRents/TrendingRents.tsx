@@ -38,7 +38,7 @@ const TrendingRentsSection = ({ data }: { data: listingType[] }) => {
                 />
               ))
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="">
               {[...Array(4)].map((_, i) => (
                 <div key={i} className="flex flex-col space-y-4">
                   <Skeleton className="h-48 w-full rounded-lg" />

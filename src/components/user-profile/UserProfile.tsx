@@ -76,7 +76,6 @@ export default function UserProfile({ user }: { user: userType }) {
   } = form;
 
   const onSubmitPassword: SubmitHandler<FieldValues> = async (data) => {
-    console.log("Updated Password:", data);
     try {
       const res = await updatePassword(data);
       if (res?.success) {

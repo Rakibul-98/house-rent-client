@@ -36,7 +36,6 @@ export default function UpdateListingForm({listing}:{listing: listingType}) {
       features: listing.features || [],
       rentAmount: listing.rentAmount || 0,
       numberOfBedrooms: listing.numberOfBedrooms || 1,
-      // features: [{ value: "" }],
       rentalImages: [],
     },
   });

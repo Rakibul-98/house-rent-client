@@ -14,7 +14,6 @@ import { Input } from "@/components/ui/input";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Link from "next/link";
 import { loginValidationSchema } from "./loginValidation";
-// import Logo from "@/app/assets/svgs/Logo";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { loginUser, reCaptchaTokenVerification } from "@/services/AuthService";

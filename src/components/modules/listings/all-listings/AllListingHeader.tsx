@@ -27,10 +27,9 @@ const AllListingsHeader: React.FC<AllListingsHeaderProps> = ({
   const [bedroomsRange, setBedroomsRange] = useState<[number, number]>([0, 5]);
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Trigger search on input change (optional)
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
-    onSearch(e.target.value); // Uncomment this line to trigger search on input change
+    onSearch(e.target.value);
   };
 
   return (

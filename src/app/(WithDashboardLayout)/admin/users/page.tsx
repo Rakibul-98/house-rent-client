@@ -12,7 +12,7 @@ const page = async () => {
 
   return (
     <div>
-      <AllUsersPage data={users.data} />
+      <AllUsersPage data={users?.data} />
     </div>
   );
 };
