@@ -23,6 +23,8 @@ const AllListingPage = ({
   data: listingType[];
   totalData: number;
 }) => {
+
+  console.log(data);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [isListingModalOpen, setListingModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);

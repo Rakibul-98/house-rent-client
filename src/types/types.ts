@@ -2,8 +2,8 @@ export type userType = {
     email: string;
     exp?: number;
     iat?: number;
-    isBlocked: boolean;
-    isDeleted: boolean;
+    isBlocked?: boolean;
+    isDeleted?: boolean;
     phone_num: string;
     profile_image: string;
     role: "tenant" | "admin" | "owner";
@@ -15,11 +15,11 @@ export type userType = {
 
 export type listingType = {
   _id: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
   house_description: string;
-  isAvailable: boolean;
-  isDeleted: boolean;
+  isAvailable?: boolean;
+  isDeleted?: boolean;
   numberOfBedrooms: number;
   rentAmount: number;
   rentalHouseLocation: string;
@@ -30,16 +30,16 @@ export type listingType = {
     user_name: string;
     email: string;
     phone_num: string;
-    isDeleted: boolean;
+    isDeleted?: boolean;
   };
   __v: number;
 };
 
 export type requestType = {
   _id: string;
-  createdAt: string;
-  updatedAt: string;
-  isDeleted: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+  isDeleted?: boolean;
   listing: listingType;
   message: string;
   paymentStatus: "active" | "inactive";
@@ -47,5 +47,5 @@ export type requestType = {
   requestStatus: "pending" | "approved" | "rejected";
   tenant: userType;
   totalAmount: number;
-  __v: number;
+  __v?: number;
 };
