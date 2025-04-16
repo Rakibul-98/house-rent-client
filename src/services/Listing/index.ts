@@ -49,6 +49,20 @@ export const getSingleListing = async(listingId: string)=>{
   }
 }
 
+export const getSearchResult = async(searchValue: string)=>{
+  try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/listings?search=${searchValue}`,{
+          next: {
+            tags: ["listing"],
+          },
+        });
+
+  return res.json();
+  } catch (error: any) {
+      return Error(error);
+  }
+}
+
 export const updateListing = async (
   listingData: FieldValues,
   listingId: string

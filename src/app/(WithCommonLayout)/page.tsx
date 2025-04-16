@@ -7,11 +7,9 @@ import { getAllListing } from "@/services/Listing";
 
 const HomePage = async () => {
 
-  const { data } = await getAllListing();
+  const { data:allListing } = await getAllListing();
 
-  console.log(data);
-
-  if(!data?.result){
+  if(!allListing?.result){
     console.error("No data found");
     return <div>No data found!</div>;
   }
@@ -20,7 +18,7 @@ const HomePage = async () => {
     <div>
       <title>Home - House Finder</title>
       <HeroSection/>
-      <TrendingRentsSection data={data?.result}/>
+      <TrendingRentsSection data={allListing?.result}/>
       <TestimonialSection/>
       <WhyChooseUsSection/>
     </div>

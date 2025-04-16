@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { getCurrentUser } from "@/services/AuthService";
 import { userType } from "@/types/types";
@@ -16,9 +16,11 @@ type userProviderValuesType = {
   isLoading: boolean;
   setUser: (user: userType | null) => void;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
-}
+};
 
-const UserContext = createContext<userProviderValuesType | undefined>(undefined);
+const UserContext = createContext<userProviderValuesType | undefined>(
+  undefined
+);
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<userType | null>(null);
@@ -35,7 +37,14 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   }, [isLoading]);
 
   return (
-    <UserContext.Provider value={{ user, setUser, isLoading, setIsLoading }}>
+    <UserContext.Provider
+      value={{
+        user,
+        setUser,
+        isLoading,
+        setIsLoading
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

@@ -1,7 +1,10 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import heroImg from "../../../assets/heroImg.jpg";
 import Link from "next/link";
+import { ArrowBigRight } from "lucide-react";
 
 export default function HeroSection() {
   return (
@@ -13,11 +16,12 @@ export default function HeroSection() {
           fill
           className="object-cover opacity-90"
           priority
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </div>
 
       <div className="relative z-10 text-center max-w-4xl px-4">
-        <h1 className="text-5xl md:text-6xl font-bold text-green-500 mb-6">
+        <h1 className="text-5xl md:text-6xl font-bold  mb-6">
           Find Your Perfect Home
         </h1>
         <p className="text-lg md:text-xl bg-slate-50 p-1 rounded-lg italic">
@@ -27,9 +31,10 @@ export default function HeroSection() {
         </p>
 
         <div className="mt-8 flex gap-4 justify-center">
-          <Link href="/listings">
-            <Button className="bg-white text-[#e54838] hover:bg-[#e54838] border-[#e54838] hover:text-white hover:border-white cursor-pointer ">
-              Browse Rentals
+          <Link href="/listings" className=" h-fit">
+            <Button className="cursor-pointer bg-green-600 hover:bg-white hover:text-green-600">
+              Explore listings
+              <ArrowBigRight/>
             </Button>
           </Link>
         </div>

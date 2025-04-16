@@ -20,6 +20,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing, onViewDetails }) => 
           alt={listing?.house_description}
           fill
           className="object-cover bg-gray-200"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </div>
 

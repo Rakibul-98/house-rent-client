@@ -10,7 +10,6 @@ const ListingsPage = async ({
 }) => {
   const { page } = await searchParams;
   const { data } = await getAllListing(page);
-  console.log(data);
   const numOfPage = Math.ceil((data?.totalData)/9);
 
   return (
