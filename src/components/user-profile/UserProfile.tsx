@@ -30,7 +30,7 @@ export default function UserProfile({ user }: { user: userType }) {
   });
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [profileImage, setProfileImage] = useState(
-    user?.profile_image || "https://via.placeholder.com/150"
+    user?.profile_image || "https://i.ibb.co.com/5gxYX0VZ/user.png"
   );
 
   const form = useForm({
@@ -116,8 +116,8 @@ export default function UserProfile({ user }: { user: userType }) {
         <div className="relative mx-auto w-30 h-30">
           <Image
             src={profileImage}
-            height={30}
-            width={30}
+            height={100}
+            width={100}
             alt="User Avatar"
             className="w-full h-full rounded-full border-4 border-teal-500"
           />

@@ -30,6 +30,10 @@ export default function Navbar() {
 
   const handleSearch = async () => {
     const { data: searchResult } = await getSearchResult(searchTerm);
+    if (searchResult.totalData < 1) {
+      toast.error("No listing found!! Try another one...");
+      setSearchTerm("");
+    }
     const searchId = searchResult?.result[0]._id;
     router.push(`/listing-details/${searchId}`);
     setSearchTerm("");
@@ -46,22 +50,24 @@ export default function Navbar() {
 
   return (
     <header className="bg-sky-50 w-full">
-      <div className="container flex justify-between items-center mx-auto h-16 px-3">
+      <div className="container flex justify-between gap-5 items-center mx-auto h-16 px-3">
         <Link href="/">
           <h1 className="text-2xl flex items-center">
-            <MapPinHouse className="size-9 text-blue-500 " />
-            House Finder
+            <MapPinHouse className="size-8 text-blue-500 " />
+            <span className="hidden md:block">House Finder</span>
+            <span className="md:hidden block">HF</span>
           </h1>
         </Link>
-        <div className="flex gap-1 justify-center">
+        <div className="flex gap-1 justify-center ">
           <Input
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full sm:w-96"
+            className="w-full sm:w-96 text-xs"
             placeholder="Search Your Rental..."
           />
           <Button
+            disabled={!searchTerm}
             className="cursor-pointer bg-green-400 hover:bg-white hover:text-green-400"
             onClick={handleSearch}
           >

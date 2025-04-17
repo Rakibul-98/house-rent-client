@@ -42,7 +42,6 @@ export default function CreateListingForm() {
   }, [imagePreview, setValue]);
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data);
     if (imageFiles.length < 1) {
       setImageError(true);
       return;
