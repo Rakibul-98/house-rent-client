@@ -3,12 +3,8 @@
 import * as React from "react";
 import {
   Building,
-  Frame,
   GitPullRequestArrow,
-  LifeBuoy,
-  Map,
-  PieChart,
-  Send,
+  MapPinHouse,
   Settings,
   SquareTerminal,
   User,
@@ -27,7 +23,6 @@ import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
 import Link from "next/link";
 import { useUser } from "@/context/UserContext";
-// import Logo from "@/assets/svgs/Logo";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user } = useUser();
@@ -84,36 +79,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           },
         ],
       },
-    ],
-    navSecondary: [
-      {
-        title: "Support",
-        url: "#",
-        icon: LifeBuoy,
-      },
-      {
-        title: "Feedback",
-        url: "#",
-        icon: Send,
-      },
-    ],
-    projects: [
-      {
-        name: "Design Engineering",
-        url: "#",
-        icon: Frame,
-      },
-      {
-        name: "Sales & Marketing",
-        url: "#",
-        icon: PieChart,
-      },
-      {
-        name: "Travel",
-        url: "#",
-        icon: Map,
-      },
-    ],
+    ]
   };
 
   return (
@@ -124,7 +90,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenuButton size="lg" asChild>
               <Link href="/">
                 <div className="flex items-center justify-center">
-                  {/* <Logo /> */}
+                <MapPinHouse className="size-8 text-blue-500 " />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <h2 className="font-bold text-xl">House Rent</h2>

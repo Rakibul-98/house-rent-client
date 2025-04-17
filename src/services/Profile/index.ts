@@ -1,6 +1,6 @@
 'use server'
 
-import cloudinary from "@/lib/cloudinary";
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
 
@@ -14,6 +14,7 @@ export const updateProfile = async (updatedData:FieldValues) => {
       },
       body: JSON.stringify(updatedData),
     });
+    revalidateTag("user");
     const result = await res.json();
     return result;
   } catch (error: any) {
@@ -31,6 +32,7 @@ export const updatePassword = async (updatedData:FieldValues) => {
       },
       body: JSON.stringify(updatedData),
     });
+    revalidateTag("user");
     const result = await res.json();
     return result;
   } catch (error: any) {
@@ -39,17 +41,21 @@ export const updatePassword = async (updatedData:FieldValues) => {
 };
 
 export const uploadToCloudinary = async (file: File): Promise<string> => {
-  const bytes = await file.arrayBuffer();
-  const buffer = Buffer.from(bytes);
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", "houseRent");
 
-  const result = await new Promise((resolve, reject) => {
-    cloudinary.uploader
-      .upload_stream({ resource_type: 'image' }, (error, result) => {
-        if (error) return reject(error);
-        resolve(result);
-      })
-      .end(buffer);
-  });
+  const response = await fetch(
+    `https://api.cloudinary.com/v1_1/drplng4db/image/upload`,
+    {
+      method: "POST",
+      body: formData,
+    }
+  );
 
-  return (result as any).secure_url;
+  if (!response.ok) {
+    throw new Error("Failed to upload image");
+  }
+  const data = await response.json();
+  return data.secure_url;
 };

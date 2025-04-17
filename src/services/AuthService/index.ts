@@ -50,6 +50,9 @@ export const getSingleUser = async (userEmail: string) => {
       headers: {
         'Authorization': (await cookies()).get("accessToken")!.value,
       },
+      next: {
+        tags: ["user"],
+      },
     });
 
     return res.json();

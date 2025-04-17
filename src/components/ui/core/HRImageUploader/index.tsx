@@ -1,5 +1,6 @@
 "use client";
 
+import { uploadToCloudinary } from "@/services/Profile";
 import { Input } from "../../input";
 import { toast } from "sonner";
 
@@ -71,26 +72,6 @@ export default function HRImageUploader({
       };
       reader.readAsDataURL(file);
     });
-  };
-
-  const uploadToCloudinary = async (file: File): Promise<string> => {
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", "houseRent");
-
-    const response = await fetch(
-      `https://api.cloudinary.com/v1_1/drplng4db/image/upload`,
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error("Failed to upload image");
-    }
-    const data = await response.json();
-    return data.secure_url;
   };
 
   return (

@@ -82,7 +82,7 @@ export function NavUser() {
               </div>
             </DropdownMenuLabel>
 
-            <DropdownMenuItem className="bg-red-500 hover:bg-red-400 cursor-pointer text-white px-5" onClick={() => handleLogout()}>
+            <DropdownMenuItem className="bg-red-500 hover:bg-red-400 cursor-pointer text-white px-5" onClick={handleLogout}>
               <LogOut className="text-white " />
               Log out
             </DropdownMenuItem>

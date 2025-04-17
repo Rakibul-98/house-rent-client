@@ -17,7 +17,7 @@ type ActionType = {
   };
 
 export default function WelcomePage({content}:{content:ContentType}) {
-  const { user } = useUser(); 
+  const { user } = useUser();
 
   return (
     <div className="min-h-[calc(100vh-100px)] flex flex-col items-center justify-center p-6 bg-gray-100 rounded-xl">
@@ -25,7 +25,7 @@ export default function WelcomePage({content}:{content:ContentType}) {
         {
           user? (
             <Image
-              src={user?.profile_image}
+              src={user.profile_image || "https://i.ibb.co.com/jkpLFGBq/dummy-user.png"}
               height={120}
               width={120}
               alt="User Avatar"

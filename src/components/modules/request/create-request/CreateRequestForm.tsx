@@ -24,6 +24,7 @@ import { requestValidationSchema } from "./requestValidation";
 import { listingType } from "@/types/types";
 import { createRequest } from "@/services/request";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 type RequestFormData = z.infer<typeof requestValidationSchema>;
 
@@ -48,6 +49,8 @@ const CreateRequestModal = ({
     },
   });
 
+  const router = useRouter();
+
   const {
     formState: { isSubmitting },
   } = form;
@@ -57,6 +60,7 @@ const CreateRequestModal = ({
       const res = await createRequest(data);
       if (res?.success) {
         toast.success(res?.message);
+        router.push("/tenant/requests");
         form.reset();
         onOpenChange(false);
       } else {
