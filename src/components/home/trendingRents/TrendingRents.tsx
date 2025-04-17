@@ -23,7 +23,9 @@ const TrendingRentsSection = ({ data }: { data: listingType[] }) => {
             Trending Rentals
           </h2>
           <Link href="/listings" className=" h-fit">
-            <Button className="cursor-pointer border hover:bg-transparent hover:text-black">View All Listing <ArrowRight/></Button>
+            <Button className="cursor-pointer border hover:bg-transparent hover:text-black">
+              View All Listing <ArrowRight />
+            </Button>
           </Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -38,21 +40,21 @@ const TrendingRentsSection = ({ data }: { data: listingType[] }) => {
                 />
               ))
           ) : (
-            <div className="">
-              {[...Array(4)].map((_, i) => (
-                <div key={i} className="flex flex-col space-y-4">
-                  <Skeleton className="h-48 w-full rounded-lg" />
-                  <Skeleton className="h-6 w-3/4 rounded" />
-                  <Skeleton className="h-4 w-1/2 rounded" />
-                  <div className="flex gap-4">
-                    <Skeleton className="h-4 w-1/4 rounded" />
-                    <Skeleton className="h-4 w-1/4 rounded" />
+            <>
+                {[...Array(4)].map((_, i) => (
+                  <div key={i} className="flex flex-col space-y-4">
+                    <Skeleton className="h-48 w-full rounded-lg" />
+                    <Skeleton className="h-6 w-3/4 rounded" />
+                    <Skeleton className="h-4 w-1/2 rounded" />
+                    <div className="flex gap-4">
+                      <Skeleton className="h-4 w-1/4 rounded" />
+                      <Skeleton className="h-4 w-1/4 rounded" />
+                    </div>
+                    <Skeleton className="h-6 w-1/3 rounded" />
+                    <Skeleton className="h-10 w-full rounded-lg" />
                   </div>
-                  <Skeleton className="h-6 w-1/3 rounded" />
-                  <Skeleton className="h-10 w-full rounded-lg" />
-                </div>
-              ))}
-            </div>
+                ))}
+            </>
           )}
         </div>
       </div>

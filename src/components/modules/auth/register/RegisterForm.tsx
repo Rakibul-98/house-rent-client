@@ -23,14 +23,19 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { registrationSchema } from "./registerValidation";
 import { registerUser } from "@/services/AuthService";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Edit2, KeyRound, KeySquare, Mail, Phone, User2 } from "lucide-react";
+import { useUser } from "@/context/UserContext";
 
 export default function RegisterForm() {
   const form = useForm({
     resolver: zodResolver(registrationSchema),
   });
+
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirectPath");
   const router = useRouter();
+  const { setIsLoading } = useUser();
 
   const {
     formState: { isSubmitting },
@@ -42,9 +47,14 @@ export default function RegisterForm() {
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       const res = await registerUser(data);
+      setIsLoading(true);
       if (res?.success) {
         toast.success(res?.message);
-        router.push("/user-profile");
+        if (redirect) {
+          router.push(redirect);
+        } else {
+          router.push("/user-profile");
+        }
       } else {
         toast.error(res?.message);
       }

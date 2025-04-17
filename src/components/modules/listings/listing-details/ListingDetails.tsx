@@ -40,7 +40,7 @@ const ListingDetails = ({ listing }: { listing?: listingType }) => {
         </Badge>
       </div>
 
-      <div className="mb-8 border rounded-lg">
+      <div className="mb-8 rounded-lg">
         <Carousel className="w-full max-w-4xl mx-auto ">
           <CarouselContent>
             {listing?.rentalImages.map((image, index) => (
@@ -119,23 +119,25 @@ const ListingDetails = ({ listing }: { listing?: listingType }) => {
               <span>**********</span>
             </div>
             <small className="italic text-red-500">
-              ** You can see owner phone number only after your request gets approved. **
+              ** You can see owner phone number only after your request gets
+              approved. **
             </small>
           </div>
-
-          {user && user.role === "tenant" && (
-            <div className="mt-6 space-y-4">
-              <Button
-                onClick={() => handleRequest(listing?._id)}
-                className="w-full"
-              >
-                Request to Rent <Send />
-              </Button>
-              <Button variant="outline" className="w-full">
-                Save Listing
-              </Button>
-            </div>
-          )}
+          <div className="mt-6 space-y-4">
+            <Button
+              disabled={user?.role != "tenant"}
+              onClick={() => handleRequest(listing?._id)}
+              className="w-full"
+            >
+              {user?.role != "tenant"
+                ? "Only Tenant can Request a Rent"
+                : "Request to Rent"}{" "}
+              <Send />
+            </Button>
+            <Button variant="outline" className="w-full">
+              Save Listing
+            </Button>
+          </div>
         </div>
       </div>
 

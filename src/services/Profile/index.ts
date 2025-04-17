@@ -1,5 +1,6 @@
 'use server'
 
+import cloudinary from "@/lib/cloudinary";
 import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
 
@@ -35,4 +36,20 @@ export const updatePassword = async (updatedData:FieldValues) => {
   } catch (error: any) {
     return Error(error);
   }
+};
+
+export const uploadToCloudinary = async (file: File): Promise<string> => {
+  const bytes = await file.arrayBuffer();
+  const buffer = Buffer.from(bytes);
+
+  const result = await new Promise((resolve, reject) => {
+    cloudinary.uploader
+      .upload_stream({ resource_type: 'image' }, (error, result) => {
+        if (error) return reject(error);
+        resolve(result);
+      })
+      .end(buffer);
+  });
+
+  return (result as any).secure_url;
 };
