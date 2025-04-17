@@ -17,7 +17,7 @@ import { listingValidationSchema } from "./listingValidation";
 import HRImageUploader from "@/components/ui/core/HRImageUploader";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { File, FileText, X } from "lucide-react";
+import { FileText, X } from "lucide-react";
 import { toast } from "sonner";
 import { createListing } from "@/services/Listing";
 import { useRouter } from "next/navigation";
@@ -25,20 +25,12 @@ import { useRouter } from "next/navigation";
 export default function CreateListingForm() {
   const form = useForm({
     resolver: zodResolver(listingValidationSchema),
-    defaultValues: {
-      rentalHouseLocation: "",
-      house_description: "",
-      features: [],
-      rentAmount: 0,
-      numberOfBedrooms: 1,
-      rentalImages: [],
-    },
   });
-
-  const [imageFiles, setImageFiles] = useState<File[] | []>([]);
+  const [imageFiles, setImageFiles] = useState<string[]>([]);
   const [imagePreview, setImagePreview] = useState<string[] | []>([]);
   const [imageError, setImageError] = useState(false);
   const router = useRouter();
+  const [isUploading, setIsUploading] = useState(false);
 
   const {
     formState: { isSubmitting },
@@ -50,16 +42,18 @@ export default function CreateListingForm() {
   }, [imagePreview, setValue]);
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    if (data.rentalImages.length < 1) {
+    console.log(data);
+    if (imageFiles.length < 1) {
       setImageError(true);
       return;
     }
     try {
-      const res = await createListing(data);
+      const res = await createListing({ ...data, rentalImages: imageFiles });
       if (res?.success) {
         toast.success(res?.message);
         form.reset();
         setImagePreview([]);
+        setImageFiles([]);
         setImageError(false);
         router.push("/owner/listing");
       } else {
@@ -170,7 +164,11 @@ export default function CreateListingForm() {
               setImageFiles={setImageFiles}
               setImagePreview={setImagePreview}
               label="Upload Images"
+              imagePreview={imagePreview}
+              isUploading={isUploading}
+              setIsUploading={setIsUploading}
             />
+
             {imagePreview.length < 1 && imageError && (
               <span className="text-red-500">Image is required!</span>
             )}
@@ -189,6 +187,7 @@ export default function CreateListingForm() {
                   />
                   <Button
                     variant="destructive"
+                    type="button"
                     onClick={() => {
                       const newPreview = imagePreview.filter(
                         (_, i) => i !== index
@@ -206,7 +205,11 @@ export default function CreateListingForm() {
           </div>
 
           <Button type="submit" className="mt-2 w-full" disabled={isSubmitting}>
-            {isSubmitting ? "Creating Listing..." : "Create Listing"}
+            {isUploading
+              ? "Uploading Images..."
+              : isSubmitting
+              ? "Creating Listing..."
+              : "Create Listing"}
           </Button>
         </form>
       </Form>

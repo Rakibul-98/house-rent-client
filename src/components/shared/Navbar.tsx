@@ -32,6 +32,7 @@ export default function Navbar() {
     const { data: searchResult } = await getSearchResult(searchTerm);
     const searchId = searchResult?.result[0]._id;
     router.push(`/listing-details/${searchId}`);
+    setSearchTerm("");
   };
 
   const handleLogOut = () => {
