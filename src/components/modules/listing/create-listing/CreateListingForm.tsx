@@ -204,7 +204,7 @@ export default function CreateListingForm() {
               ))}
           </div>
 
-          <Button type="submit" className="mt-2 w-full" disabled={isSubmitting}>
+          <Button type="submit" className="mt-2 w-full" disabled={isSubmitting || isUploading}>
             {isUploading
               ? "Uploading Images..."
               : isSubmitting

@@ -11,39 +11,43 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  FieldValues,
-  SubmitHandler,
-  useForm,
-} from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import HRImageUploader from "@/components/ui/core/HRImageUploader";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { X } from "lucide-react";
+import { EditIcon, X } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { listingValidationSchema } from "../create-listing/listingValidation";
 import { listingType } from "@/types/types";
 import { updateListing } from "@/services/Listing";
 
-export default function UpdateListingForm({listing}:{listing: listingType}) {
+export default function UpdateListingForm({
+  listing,
+}: {
+  listing: listingType;
+}) {
+  console.log(listing);
   const form = useForm({
     resolver: zodResolver(listingValidationSchema),
     defaultValues: {
-      rentalHouseLocation: listing.rentalHouseLocation || '',
-      house_description: listing.house_description || '',
+      rentalHouseLocation: listing.rentalHouseLocation || "",
+      house_description: listing.house_description || "",
       features: listing.features || [],
       rentAmount: listing.rentAmount || 0,
       numberOfBedrooms: listing.numberOfBedrooms || 1,
-      rentalImages: [],
+      rentalImages: listing.rentalImages || [],
     },
   });
 
-  const [imageFiles, setImageFiles] = useState<File[] | []>([]);
-  const [imagePreview, setImagePreview] = useState<string[] | []>([]);
+  const [imageFiles, setImageFiles] = useState<string[]>([]);
+  const [imagePreview, setImagePreview] = useState<string[] | []>(
+    listing.rentalImages || []
+  );
   const [imageError, setImageError] = useState(false);
   const router = useRouter();
+  const [isUploading, setIsUploading] = useState(false);
 
   const {
     formState: { isSubmitting },
@@ -55,17 +59,20 @@ export default function UpdateListingForm({listing}:{listing: listingType}) {
   }, [imagePreview, setValue]);
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-
     if (data.rentalImages.length < 1) {
       setImageError(true);
       return;
     }
     try {
-      const res = await updateListing(data, listing._id);
+      const res = await updateListing(
+        { ...data, rentalImages: imageFiles },
+        listing._id
+      );
       if (res?.success) {
         toast.success(res?.message);
         form.reset();
         setImagePreview([]);
+        setImageFiles([]);
         setImageError(false);
         router.push("/owner/listing");
       } else {
@@ -77,14 +84,11 @@ export default function UpdateListingForm({listing}:{listing: listingType}) {
   };
 
   return (
-    <div className="border-2 border-gray-300 rounded-xl flex-grow max-w-md w-full p-5">
-      <div className="flex items-center space-x-4">
-        <div>
-          <h1 className="text-xl font-semibold">Update Listing Information</h1>
-          <p className="font-extralight text-sm text-gray-600">
-            List your property for rent!
-          </p>
-        </div>
+    <div className="shadow-2xl rounded-xl flex-grow max-w-md w-full p-5">
+      <div className="mb-5">
+        <h1 className="text-xl font-semibold flex gap-2 items-center">
+          <EditIcon /> Update Listing Information
+        </h1>
       </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -95,7 +99,11 @@ export default function UpdateListingForm({listing}:{listing: listingType}) {
               <FormItem>
                 <FormLabel>Location</FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="Enter property location" readOnly />
+                  <Input
+                    {...field}
+                    placeholder="Enter property location"
+                    readOnly
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -117,44 +125,44 @@ export default function UpdateListingForm({listing}:{listing: listingType}) {
               </FormItem>
             )}
           />
-
-          <FormField
-            control={form.control}
-            name="rentAmount"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Rent Amount</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    {...field}
-                    onChange={(e) => field.onChange(Number(e.target.value))}
-                    placeholder="Enter rent amount"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="numberOfBedrooms"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Bedrooms</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    {...field}
-                    onChange={(e) => field.onChange(Number(e.target.value))}
-                    placeholder="Enter number of bedrooms"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="flex justify-between">
+            <FormField
+              control={form.control}
+              name="rentAmount"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Rent Amount</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      {...field}
+                      onChange={(e) => field.onChange(Number(e.target.value))}
+                      placeholder="Enter rent amount"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="numberOfBedrooms"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Bedrooms</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      {...field}
+                      onChange={(e) => field.onChange(Number(e.target.value))}
+                      placeholder="Enter number of bedrooms"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
           <FormField
             control={form.control}
@@ -173,47 +181,59 @@ export default function UpdateListingForm({listing}:{listing: listingType}) {
               </FormItem>
             )}
           />
-
-          <HRImageUploader
-            setImageFiles={setImageFiles}
-            setImagePreview={setImagePreview}
-            label="Upload Images"
-          />
-          {imagePreview.length < 1 && imageError && (
-            <span className="text-red-500">Image is required!</span>
-          )}
-          {imagePreview.length > 0 &&
-            imagePreview.map((preview, index) => (
-              <div
-                key={index}
-                className="relative w-36 h-36 rounded-md overflow-hidden border border-dashed border-gray-300"
-              >
-                <Image
-                  src={preview}
-                  alt="preview"
-                  width={100}
-                  height={100}
-                  className="object-cover w-full h-full"
-                />
-                <Button
-                  variant="destructive"
-                  onClick={() => {
-                    const newPreview = imagePreview.filter(
-                      (_, i) => i !== index
-                    );
-                    const newFiles = imageFiles.filter((_, i) => i !== index);
-                    setImagePreview(newPreview);
-                    setImageFiles(newFiles);
-                  }}
-                  className="absolute top-0 right-0 rounded-full p-0 size-7 cursor-pointer"
+          <div className="flex flex-col md:flex-row gap-5">
+            <HRImageUploader
+              setImageFiles={setImageFiles}
+              setImagePreview={setImagePreview}
+              label="Upload Images"
+              imagePreview={imagePreview}
+              isUploading={isUploading}
+              setIsUploading={setIsUploading}
+            />
+            {imagePreview.length < 1 && imageError && (
+              <span className="text-red-500">Image is required!</span>
+            )}
+            {imagePreview.length > 0 &&
+              imagePreview.map((preview, index) => (
+                <div
+                  key={index}
+                  className="relative w-full h-36 rounded-md overflow-hidden border border-dashed border-gray-300"
                 >
-                  <X />
-                </Button>
-              </div>
-            ))}
-
-          <Button type="submit" className="mt-5 w-full" disabled={isSubmitting}>
-            {isSubmitting ? "Updating..." : "Update Listing"}
+                  <Image
+                    src={preview}
+                    alt="preview"
+                    width={100}
+                    height={100}
+                    className="object-cover w-full h-full"
+                  />
+                  <Button
+                    variant="destructive"
+                    type="button"
+                    onClick={() => {
+                      const newPreview = imagePreview.filter(
+                        (_, i) => i !== index
+                      );
+                      const newFiles = imageFiles.filter((_, i) => i !== index);
+                      setImagePreview(newPreview);
+                      setImageFiles(newFiles);
+                    }}
+                    className="absolute top-0 right-0 rounded-full p-0 size-7 cursor-pointer"
+                  >
+                    <X />
+                  </Button>
+                </div>
+              ))}
+          </div>
+          <Button
+            type="submit"
+            className="mt-2 w-full"
+            disabled={isSubmitting || isUploading}
+          >
+            {isUploading
+              ? "Uploading Images..."
+              : isSubmitting
+              ? "Updating..."
+              : "Update Listing"}
           </Button>
         </form>
       </Form>
