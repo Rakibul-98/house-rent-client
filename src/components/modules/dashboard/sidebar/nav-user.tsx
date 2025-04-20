@@ -33,7 +33,6 @@ export function NavUser() {
     logout();
     toast.success("Logout successful!")
     setIsLoading(true);
-
     if (protectedRoutes.some((route) => pathname.match(route))) {
       router.push("/");
     }

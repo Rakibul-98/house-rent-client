@@ -17,13 +17,11 @@ import Image from "next/image";
 import { updatePassword, updateProfile } from "@/services/Profile";
 import { toast } from "sonner";
 import { userType } from "@/types/types";
-import { useRouter } from "next/navigation";
 import { Badge } from "../ui/badge";
 import profileBannerImg from "../../assets/svg/profileBannerImg.svg";
 import { useUser } from "@/context/UserContext";
 
 export default function UserProfile({ user }: { user: userType }) {
-  const router = useRouter();
   const { setIsLoading } = useUser();
   const [isEditing, setIsEditing] = useState({
     user_name: false,
@@ -54,7 +52,7 @@ export default function UserProfile({ user }: { user: userType }) {
     setIsLoading(true);
     const updatedData = {
       ...data,
-      profile_image: profileImage
+      profile_image: profileImage,
     };
 
     const res = await updateProfile(updatedData);
@@ -78,21 +76,18 @@ export default function UserProfile({ user }: { user: userType }) {
   } = form;
 
   const onSubmitPassword: SubmitHandler<FieldValues> = async (data) => {
-    setIsLoading(true);
     try {
       const res = await updatePassword(data);
       if (res?.success) {
         toast.success(res?.message);
         setIsChangingPassword(false);
         passwordForm.reset();
-        router.push("/login");
       } else {
         toast.error(res?.message);
       }
     } catch (error) {
       console.log(error);
     }
-    setIsChangingPassword(false);
   };
 
   const uploadToCloudinary = async (file: File): Promise<string> => {
@@ -156,15 +151,6 @@ export default function UserProfile({ user }: { user: userType }) {
             className="hidden"
             id="profile-image-upload"
           />
-
-          {/* <Input
-            id="image-upload"
-            type="file"
-            accept="image/*"
-            multiple
-            className="hidden"
-            onChange={handleImageChange}
-          /> */}
           <label
             htmlFor="profile-image-upload"
             className="absolute bottom-1 right-1 bg-teal-600 text-white p-1 rounded-full cursor-pointer"
