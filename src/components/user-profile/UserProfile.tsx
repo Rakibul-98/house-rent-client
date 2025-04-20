@@ -54,8 +54,7 @@ export default function UserProfile({ user }: { user: userType }) {
     setIsLoading(true);
     const updatedData = {
       ...data,
-      profile_image: profileImage,
-      phone_num: user?.phone_num,
+      profile_image: profileImage
     };
 
     const res = await updateProfile(updatedData);
