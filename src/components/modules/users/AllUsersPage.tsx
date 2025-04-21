@@ -117,8 +117,8 @@ const AllUsersPage = ({ data }: { data: userType[] }) => {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-4">
-        <h3 className="font-bold text-xl">Users</h3>
+      <div className="md:flex justify-between items-center mb-4">
+        <h3 className="font-bold text-xl mb-2 md:mb-0">Users</h3>
         <div className="flex gap-4">
           <Input
             type="text"

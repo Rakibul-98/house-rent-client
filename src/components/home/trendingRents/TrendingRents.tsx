@@ -18,8 +18,8 @@ const TrendingRentsSection = ({ data }: { data: listingType[] }) => {
   return (
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
-        <div className="flex justify-between">
-          <h2 className="text-3xl md:text-2xl font-bold text-center mb-8">
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="text-xl md:text-2xl font-bold">
             Trending Rentals
           </h2>
           <Link href="/listings" className=" h-fit">

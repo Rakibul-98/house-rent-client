@@ -72,7 +72,7 @@ export default function LoginForm() {
   };
 
   return (
-    <div className=" rounded-xl flex-grow max-w-sm w-full p-5 shadow-2xl">
+    <div className=" rounded-xl flex-grow max-w-xs w-[95%] p-5 shadow-2xl">
       <div className="flex items-center gap-2 mb-5">
         <MapPinHouse />
         <div>

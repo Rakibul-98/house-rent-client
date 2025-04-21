@@ -7,9 +7,7 @@ const Footer = () => {
     { href: "/", label: "Home" },
     { href: "/listings", label: "Rentals" },
     { href: "/about", label: "About Us" },
-    { href: "#test", label: "Testimonial" },
-    { href: "#blog", label: "Blogs" },
-    { href: "#contact", label: "Contact Us" },
+    { href: "#testimonial", label: "Testimonial" },
   ];
 
   const socialLinks = [
@@ -27,7 +25,7 @@ const Footer = () => {
               House Finder
             </h1>
           </div>
-          <p className="text-gray-600 mt-3 w-1/2">
+          <p className="text-gray-600 mt-3 w-full md:w-1/2">
           Our house rental service offers a seamless experience with thousands of verified listings, flexible pricing, and secure transactions.
           </p>
         </div>

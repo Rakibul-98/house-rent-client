@@ -1,7 +1,12 @@
-"use client"
+"use client";
 
 import React, { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import Image from "next/image";
 import { listingType } from "@/types/types";
 import { Bed, Coins, MailPlus, MapPin, User2Icon, Zap } from "lucide-react";
@@ -12,7 +17,11 @@ interface ListingModalProps {
   listing: listingType;
 }
 
-const DisplayListingModal = ({ isOpen, onClose, listing }: ListingModalProps) => {
+const DisplayListingModal = ({
+  isOpen,
+  onClose,
+  listing,
+}: ListingModalProps) => {
   const [selectedImage, setSelectedImage] = useState(listing?.rentalImages[0]);
 
   const handleImageClick = (image: string) => {
@@ -21,12 +30,12 @@ const DisplayListingModal = ({ isOpen, onClose, listing }: ListingModalProps) =>
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-xl">
+      <DialogContent className="sm:max-w-xl text-sm">
         <DialogHeader>
           <DialogTitle></DialogTitle>
         </DialogHeader>
 
-        <div className="relative w-full h-56 rounded-lg overflow-hidden bg-gray-50 mt-1">
+        <div className="relative w-full h-32 md:h-56 rounded-lg overflow-hidden bg-gray-50">
           <Image
             src={selectedImage}
             alt="Main Listing Image"
@@ -52,22 +61,44 @@ const DisplayListingModal = ({ isOpen, onClose, listing }: ListingModalProps) =>
           ))}
         </div>
 
-        <div className="mt-2 space-y-2">
-        <p>{listing?.house_description}</p>
-            <div className="md:flex justify-between">
-            <p className="flex gap-2"><strong><MapPin/></strong> {listing?.rentalHouseLocation}</p>
-            <p className="flex gap-2"><strong><Coins/></strong> ${listing?.rentAmount}</p>
-            </div>
-          
-          <p className="flex gap-2"><strong><Bed/></strong> <span className="font-bold bg-gray-100 rounded-full px-5">{listing?.numberOfBedrooms}</span></p>
-          
-          <p className="flex gap-2"><strong><Zap/></strong> <span className="">{listing?.features.join(", ")}</span></p>
+        <div className="mt-2 space-y-4">
+          <p>{listing?.house_description}</p>
+          <div className="flex justify-between">
+            <p className="flex gap-1">
+                <MapPin />
+              {listing?.rentalHouseLocation}
+            </p>
+            <p className="flex gap-1">
+                <Coins />
+              ${listing?.rentAmount}
+            </p>
+            <p className="flex gap-1">
+              <strong>
+                <Bed />
+              </strong>{" "}
+              <span className="font-bold bg-gray-100 rounded-full px-2">
+                {listing?.numberOfBedrooms}
+              </span>
+            </p>
+          </div>
+
+          <p className="flex gap-1">
+            <strong>
+              <Zap />
+            </strong>{" "}
+            <span className="">{listing?.features.join(", ")}</span>
+          </p>
 
           <div className="md:flex justify-between">
-          <p className="flex gap-2"><strong><User2Icon/></strong> {listing?.owner.user_name}</p>
-          <p className="flex gap-2"><strong><MailPlus/></strong> {listing?.owner.email}</p>
-            </div>
-          
+            <p className="flex gap-1 items-center">
+                <User2Icon />
+              {listing?.owner.user_name}
+            </p>
+            <p className="flex gap-2 mt-3 md:mt-0">
+                <MailPlus />
+              {listing?.owner.email}
+            </p>
+          </div>
         </div>
       </DialogContent>
     </Dialog>

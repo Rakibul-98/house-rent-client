@@ -15,6 +15,10 @@ interface AllListingsHeaderProps {
   onRentRangeChange: (min: number, max: number) => void;
   onBedroomsRangeChange: (min: number, max: number) => void;
   onSortChange: (sort: string) => void;
+  minRent: number;
+  maxRent:number;
+  minBedrooms:number;
+  maxBedrooms:number;
 }
 
 const AllListingsHeader: React.FC<AllListingsHeaderProps> = ({
@@ -22,9 +26,13 @@ const AllListingsHeader: React.FC<AllListingsHeaderProps> = ({
   onRentRangeChange,
   onBedroomsRangeChange,
   onSortChange,
+  minRent,
+  maxRent,
+  minBedrooms,
+  maxBedrooms
 }) => {
-  const [rentRange, setRentRange] = useState<[number, number]>([0, 5000]);
-  const [bedroomsRange, setBedroomsRange] = useState<[number, number]>([0, 5]);
+  const [rentRange, setRentRange] = useState<[number, number]>([minRent, maxRent]);
+  const [bedroomsRange, setBedroomsRange] = useState<[number, number]>([minBedrooms, maxBedrooms]);
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,8 +41,8 @@ const AllListingsHeader: React.FC<AllListingsHeaderProps> = ({
   };
 
   return (
-    <div className="flex flex-col lg:flex-row gap-6 pb-2 mb-5 bg-white justify-between">
-      <div className="flex items-center gap-4">
+    <div className="flex flex-col lg:flex-row gap-6 pb-2 mb-5 bg-white justify-between items-center ">
+      <div className="w-full flex justify-center lg:justify-normal items-center gap-2">
         <Input
           placeholder="Search by location..."
           value={searchQuery}
@@ -44,16 +52,16 @@ const AllListingsHeader: React.FC<AllListingsHeaderProps> = ({
           <Search className="h-5 w-5 text-gray-500" />
       </div>
 
-      <div className="flex gap-5 items-center">
+      <div className="w-full flex flex-col justify-center lg:justify-end md:flex-row gap-5 ">
         <div className="">
           <label className="text-sm font-medium">
             Rent Range (${rentRange[0]} - ${rentRange[1]})
           </label>
           <Slider
             defaultValue={rentRange}
-            min={0}
-            max={5000}
-            step={50}
+            min={minRent}
+            max={maxRent}
+            step={500}
             onValueChange={(value) => {
               setRentRange(value as [number, number]);
               onRentRangeChange(value[0], value[1]);
@@ -68,8 +76,8 @@ const AllListingsHeader: React.FC<AllListingsHeaderProps> = ({
           </label>
           <Slider
             defaultValue={bedroomsRange}
-            min={0}
-            max={5}
+            min={minBedrooms}
+            max={maxBedrooms}
             step={1}
             onValueChange={(value) => {
               setBedroomsRange(value as [number, number]);
@@ -79,7 +87,7 @@ const AllListingsHeader: React.FC<AllListingsHeaderProps> = ({
           />
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 justify-end md:justify-normal">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="flex items-center gap-2">

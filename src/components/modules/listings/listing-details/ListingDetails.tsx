@@ -41,11 +41,11 @@ const ListingDetails = ({ listing }: { listing?: listingType }) => {
       </div>
 
       <div className="mb-8 rounded-lg">
-        <Carousel className="w-full max-w-4xl mx-auto ">
+        <Carousel className="w-[80%] max-w-4xl mx-auto ">
           <CarouselContent>
             {listing?.rentalImages.map((image, index) => (
               <CarouselItem key={index}>
-                <div className="relative w-full h-96 rounded-lg overflow-hidden ">
+                <div className="relative w-full h-64 md:h-80 lg:h-96 rounded-lg overflow-hidden ">
                   <Image
                     src={image}
                     alt={`Listing Image ${index + 1}`}
@@ -69,7 +69,7 @@ const ListingDetails = ({ listing }: { listing?: listingType }) => {
               Property Details
             </h2>
             <div className="space-y-4">
-              <div className="flex items-center gap-4">
+              <div className="flex  gap-4">
                 <span className="font-medium">Location:</span>
                 <span>{listing?.rentalHouseLocation}</span>
               </div>
@@ -81,7 +81,7 @@ const ListingDetails = ({ listing }: { listing?: listingType }) => {
                 <span className="font-medium">Rent:</span>
                 <span>${listing?.rentAmount}/mo</span>
               </div>
-              <div className="flex items-center gap-4">
+              <div className="flex  gap-4">
                 <span className="font-medium">Features:</span>
                 <div className="flex flex-wrap gap-2">
                   {listing?.features.map((feature, index) => (
@@ -127,7 +127,7 @@ const ListingDetails = ({ listing }: { listing?: listingType }) => {
             <Button
               disabled={user?.role != "tenant"}
               onClick={() => handleRequest(listing?._id)}
-              className="w-full"
+              className="w-full text-xs md:text-md"
             >
               {user?.role != "tenant"
                 ? "Only Tenant can Request a Rent"
@@ -142,7 +142,7 @@ const ListingDetails = ({ listing }: { listing?: listingType }) => {
       </div>
 
       <div className="mt-8 bg-white p-6 rounded-lg shadow-md border">
-        <h2 className="text-xl font-semibold mb-4 flex gap-2">
+        <h2 className="text-xl font-semibold mb-4 flex gap-2 items-center">
           <Info />
           Additional Information
         </h2>

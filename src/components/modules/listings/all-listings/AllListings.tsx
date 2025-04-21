@@ -3,7 +3,7 @@
 import ListingCard from "@/components/ui/core/HRCard";
 import { listingType } from "@/types/types";
 import AllListingsHeader from "./AllListingHeader";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
 const AllListings = ({ data }: { data: listingType[] }) => {
@@ -61,18 +61,40 @@ const AllListings = ({ data }: { data: listingType[] }) => {
     setFilteredData(sorted);
   };
 
+  const { minRent, maxRent } = useMemo(() => {
+    const rents = data.map(listing => listing.rentAmount);
+    return {
+      minRent: Math.min(...rents),
+      maxRent: Math.max(...rents)
+    };
+  }, [data]);
+
+  const { minBedrooms, maxBedrooms } = useMemo(() => {
+    const bedrooms = data.map(listing => listing.numberOfBedrooms);
+    return {
+      minBedrooms: Math.min(...bedrooms),
+      maxBedrooms: Math.max(...bedrooms)
+    };
+  }, [data]);
+
   return (
-    <div className="container mx-auto p-6 xl:px-0">
+    <div className="container mx-auto p-6 xl:px-5">
       <AllListingsHeader
         onSearch={handleSearch}
         onRentRangeChange={handleRentRangeChange}
         onBedroomsRangeChange={handleBedroomsRangeChange}
         onSortChange={handleSort}
+        minRent={minRent}
+        maxRent={maxRent}
+        minBedrooms={minBedrooms}
+        maxBedrooms={maxBedrooms}
       />
       {filteredData.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-96">
           <p className="text-xl text-gray-600">No listings found.</p>
-          <p className="text-sm text-gray-500">Try another location or adjust your filters.</p>
+          <p className="text-sm text-gray-500">
+            Try another location or adjust your filters.
+          </p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

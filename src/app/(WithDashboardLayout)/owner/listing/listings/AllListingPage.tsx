@@ -126,7 +126,7 @@ const AllListingPage = ({
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex justify-between items-center mb-4 gap-5">
         <h3 className="font-bold text-xl">Lists</h3>
         <Input
           type="text"

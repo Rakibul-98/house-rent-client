@@ -50,7 +50,7 @@ export default function Navbar() {
 
   return (
     <header className="bg-sky-50 w-full">
-      <div className="container flex justify-between gap-5 items-center mx-auto h-16 px-3">
+      <div className="container flex justify-between gap-3 items-center mx-auto h-16 px-3">
         <Link href="/">
           <h1 className="text-2xl flex items-center">
             <MapPinHouse className="size-8 text-blue-500 " />
@@ -63,10 +63,11 @@ export default function Navbar() {
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full sm:w-96 text-xs"
+            className="w-full h-auto sm:w-96 text-xs"
             placeholder="Search Your Rental..."
           />
           <Button
+          size="sm"
             disabled={!searchTerm}
             className="cursor-pointer bg-green-400 hover:bg-white hover:text-green-400"
             onClick={handleSearch}
@@ -108,7 +109,8 @@ export default function Navbar() {
             </>
           ) : (
             <Link href="/login">
-              <Button className="rounded-sm cursor-pointer">Login</Button>
+              <Button
+              size="sm" className="rounded-sm cursor-pointer">Login</Button>
             </Link>
           )}
         </nav>

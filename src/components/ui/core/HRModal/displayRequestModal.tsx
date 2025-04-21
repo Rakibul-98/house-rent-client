@@ -55,7 +55,7 @@ const DisplayRequestModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-2xl">
+      <DialogContent className="sm:max-w-2xl text-xs md:text-sm">
         <DialogHeader>
           <DialogTitle className="text-2xl">
             Request Details of{" "}
@@ -65,9 +65,9 @@ const DisplayRequestModal = ({
           </DialogTitle>
         </DialogHeader>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className=" p-4 rounded-lg shadow-lg border">
-            <div className="flex items-center gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-5">
+          <div className=" p-2 rounded-lg shadow-md border">
+            <div className="flex items-center gap-2">
               <User className="w-6 h-6 text-blue-500" />
               <div>
                 <p className="text-sm text-gray-500">Tenant</p>
@@ -77,7 +77,7 @@ const DisplayRequestModal = ({
           </div>
 
           {user?.role === "tenant" ? (
-            <div className="shadow-lg border rounded-lg flex justify-center items-center px-8 py-4">
+            <div className="shadow-md border rounded-lg flex justify-center items-center px-8 py-4">
               <Button
                 disabled={request.paymentStatus !== "active"}
                 onClick={() => handlePayment(request._id)}
@@ -87,8 +87,8 @@ const DisplayRequestModal = ({
               </Button>
             </div>
           ) : (
-            <div className="shadow-lg border p-4 rounded-lg">
-              <div className="flex items-center gap-3">
+            <div className="shadow-md border p-2 rounded-lg">
+              <div className="flex items-center gap-2">
                 <Phone className="w-6 h-6 text-green-500" />
                 <div>
                   <p className="text-sm text-gray-500">Tenant Phone No.</p>
@@ -98,8 +98,8 @@ const DisplayRequestModal = ({
             </div>
           )}
 
-          <div className="shadow-lg border p-4 rounded-lg col-span-2">
-            <div className="flex items-center gap-3">
+          <div className="shadow-md border p-2 rounded-lg col-span-2">
+            <div className="flex items-center gap-2">
               <MessageSquare className="w-6 h-6 text-purple-500" />
               <div>
                 <p className="text-sm text-gray-500">Message</p>
@@ -108,8 +108,8 @@ const DisplayRequestModal = ({
             </div>
           </div>
 
-          <div className="shadow-lg border p-4 rounded-lg">
-            <div className="flex items-center gap-3">
+          <div className="shadow-md border p-2 rounded-lg">
+            <div className="flex items-center gap-2">
               <User className="w-6 h-6 text-blue-500" />
               <div>
                 <p className="text-sm text-gray-500">Owner</p>
@@ -120,8 +120,8 @@ const DisplayRequestModal = ({
             </div>
           </div>
 
-          <div className="shadow-lg border p-4 rounded-lg">
-            <div className="flex items-center gap-3">
+          <div className="shadow-md border p-2 rounded-lg">
+            <div className="flex items-center gap-2">
               <Phone className="w-6 h-6 text-green-500" />
               <div>
                 <p className="text-sm text-gray-500">Owner Contact No.</p>
@@ -136,15 +136,15 @@ const DisplayRequestModal = ({
             </div>
           </div>
 
-          <div className="shadow-lg border p-4 rounded-lg">
-            <div className="flex items-center gap-3">
+          <div className="shadow-md border p-2 rounded-lg">
+            <div className="flex items-center gap-2">
               <CreditCard className="w-6 h-6 text-orange-500" />
               <div>
                 <p className="text-sm text-gray-500">Payment Status</p>
                 <Badge
                 className={`${request.paymentStatus === "active"
                   ? "bg-green-500"
-                  : "bg-red-500"} px-5`}
+                  : "bg-red-500"} px-2`}
                 >
                   <span className="uppercase text-white">{request.paymentStatus}</span>
                 </Badge>
@@ -152,8 +152,8 @@ const DisplayRequestModal = ({
             </div>
           </div>
 
-          <div className="shadow-lg border p-4 rounded-lg">
-            <div className="flex items-center gap-3">
+          <div className="shadow-md border p-2 rounded-lg">
+            <div className="flex items-center gap-2">
               <AlertCircle className="w-6 h-6 text-red-500" />
               <div>
                 <p className="text-sm text-gray-500">Request Status</p>
@@ -162,7 +162,7 @@ const DisplayRequestModal = ({
                   ? "bg-green-500"
                   : request.requestStatus === "pending"
                   ? "bg-gray-500"
-                  : "bg-red-500"} px-5`}
+                  : "bg-red-500"} px-2`}
                 >
                   <span className="uppercase text-white">{request.requestStatus}</span>
                 </Badge>
@@ -170,7 +170,7 @@ const DisplayRequestModal = ({
             </div>
           </div>
 
-          <div className="shadow-lg border p-4 rounded-lg flex items-center gap-3">
+          <div className="shadow-md border p-2 rounded-lg flex items-center gap-2">
             <CreditCard className="w-6 h-6 text-teal-500" />
             <div>
               <p className="text-sm text-gray-500">Total Amount</p>
@@ -178,7 +178,7 @@ const DisplayRequestModal = ({
             </div>
           </div>
 
-          <div className="shadow-lg border p-4 rounded-lg flex items-center gap-3">
+          <div className="shadow-md border p-2 rounded-lg flex items-center gap-2">
             <Calendar className="w-6 h-6 text-pink-500" />
             <div>
               <p className="text-sm text-gray-500">Created At</p>
