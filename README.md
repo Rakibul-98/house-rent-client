@@ -16,7 +16,7 @@ House Finder is a modern, responsive platform for finding and listing homes, fea
 
 ### Frontend
 - **Next**: A powerful React framework for building web applications.
-- **ShadCn**: A customizable component library for modern UIs.
+- **RadixUi**: A customizable component library for modern UIs.
 - **TailwindCSS**: A utility-first CSS framework for rapid UI development.
 - **NextAuth**: An authentication solution for Next.js applications.
 - **TypeScript**: A statically typed superset of JavaScript.
@@ -43,7 +43,7 @@ House Finder is a modern, responsive platform for finding and listing homes, fea
 - 
 ## Live Demo
 
-[Live Demo](https://house-rent-client.onrender.com//)
+[Live Demo](https://house-finder-rakibul.vercel.app)
 
 ## Screenshots
 
@@ -68,6 +68,25 @@ Follow these steps to set up the project locally:
 ### Prerequisites
 - Node.js (v18 or higher)
 - npm or yarn
+
+## Environment Variables
+
+Create a `.env.local` or `.env` file in the root directory and configure the following variables:
+
+```env
+
+NEXT_PUBLIC_BASE_API=<your_server_url>
+#google re-captcha
+NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY=<your_recaptcha_client_key>
+NEXT_PUBLIC_RECAPTCHA_SERVER_KEY=<your_recaptcha_server_key>
+#cloudinary setup
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=<your_cloudinary_cloud_name>
+NEXT_PUBLIC_CLOUDINARY_API_KEY=<your_cloudinary_api_key>
+NEXT_PUBLIC_CLOUDINARY_API_SECRET=<your_cloudinary_api_secret>
+CLOUDINARY_URL=<your_cloudinary_url>
+NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=<your_cloudinary_upload_preset>
+
+```
 
 ### Installation
 
