@@ -1,43 +1,94 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { useKeenSlider } from "keen-slider/react";
+import "keen-slider/keen-slider.min.css";
 import Image from "next/image";
-import heroImg from "../../../assets/heroImg.jpg";
-import Link from "next/link";
-import { ArrowBigRight } from "lucide-react";
+import img1 from "../../../assets/carouselImg/carousel (1).jpg";
+import img2 from "../../../assets/carouselImg/carousel (2).jpg";
+import img3 from "../../../assets/carouselImg/carousel (3).jpg";
+import img4 from "../../../assets/carouselImg/carousel (6).jpg";
+import img5 from "../../../assets/carouselImg/carousel (5).jpg";
+
+const slides = [
+  {
+    img: img1,
+    title: "Modern Living in the City",
+    subtitle: "Discover premium apartments in the heart of town.",
+    position: "left",
+  },
+  {
+    img: img2,
+    title: "Cozy Family Homes",
+    subtitle: "Perfect spaces for comfort and connection.",
+    position: "right",
+  },
+  {
+    img: img3,
+    title: "Luxury Villas",
+    subtitle: "Elegant homes that reflect your lifestyle.",
+    position: "left",
+  },
+  {
+    img: img4,
+    title: "Affordable Rentals",
+    subtitle: "Comfort and quality within your reach.",
+    position: "right",
+  },
+  {
+    img: img5,
+    title: "Beachside Serenity",
+    subtitle: "Wake up to breathtaking sea views every day.",
+    position: "left",
+  },
+];
 
 export default function HeroSection() {
+  const [sliderRef] = useKeenSlider({
+    loop: true,
+    slides: { perView: 1 },
+    renderMode: "performance",
+    created: (slider) => {
+      setInterval(() => {
+        slider.next();
+      }, 3000);
+    },
+  });
+
   return (
-    <section className="relative h-[600px] flex items-center justify-center bg-gray-400 overflow-hidden">
-      <div className="absolute inset-0 z-0">
-        <Image
-          src={heroImg}
-          alt="Modern Apartment"
-          fill
-          className="object-cover opacity-90"
-          priority
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        />
-      </div>
+    <section className="relative h-[70vh] overflow-hidden">
+      <div ref={sliderRef} className="keen-slider h-full">
+        {slides.map((slide, idx) => (
+          <div className="keen-slider__slide relative h-full w-full" key={idx}>
+            <Image
+              src={slide.img}
+              alt={slide.title}
+              fill
+              className="object-cover"
+              priority={idx === 0}
+            />
 
-      <div className="relative z-10 text-center max-w-4xl px-4">
-        <h1 className="text-5xl md:text-6xl font-bold  mb-6">
-          Find Your Perfect Home
-        </h1>
-        <p className="text-lg md:text-xl bg-slate-50 p-1 rounded-lg italic">
-          Discover thousands of rental properties tailored to your needs.
-          Whether you&apos;re looking for a cozy apartment or a spacious villa,
-          we&apos;ve got you covered.
-        </p>
+            <div
+              className={`absolute z-10 top-0 bottom-0 w-full ${
+                slide.position === "left"
+                  ? "left-0 bg-gradient-to-r from-black/80 to-transparent"
+                  : "right-0 bg-gradient-to-l from-black/80 to-transparent"
+              }`}
+            />
 
-        <div className="mt-8 flex gap-4 justify-center">
-          <Link href="/listings" className=" h-fit">
-            <Button className="cursor-pointer bg-green-600 hover:bg-white hover:text-green-600">
-              Explore listings
-              <ArrowBigRight/>
-            </Button>
-          </Link>
-        </div>
+            <div
+              className={`absolute z-20 top-1/2 transform -translate-y-1/2 text-white px-6 w-full max-w-2xl ${
+                slide.position === "left"
+                  ? "left-10 text-left"
+                  : "right-10 text-right"
+              }`}
+            >
+              <h2 className="text-4xl md:text-5xl font-bold mb-2 underline decoration-[#5274b8]">
+                {slide.title}
+              </h2>
+              <p className="text-lg md:text-xl">{slide.subtitle}</p>
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   );

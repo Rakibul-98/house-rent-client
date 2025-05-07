@@ -7,6 +7,7 @@ import { listingType } from "@/types/types";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Title from "../Shared/Title";
 
 const TrendingRentsSection = ({ data }: { data: listingType[] }) => {
   const router = useRouter();
@@ -16,19 +17,17 @@ const TrendingRentsSection = ({ data }: { data: listingType[] }) => {
   };
 
   return (
-    <section className="py-16 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="text-xl md:text-2xl font-bold">
-            Trending Rentals
-          </h2>
+    <section className="my-10">
+      <div className="w-[90%] mx-auto">
+        <div className="flex justify-between items-center mb-5">
+          <Title title="Trending Rentals" />
           <Link href="/listings" className=" h-fit">
             <Button className="cursor-pointer border hover:bg-transparent hover:text-black">
               View All Listing <ArrowRight />
             </Button>
           </Link>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 items-start">
           {data?.length > 0 ? (
             data
               .slice(0, 4)
@@ -43,7 +42,7 @@ const TrendingRentsSection = ({ data }: { data: listingType[] }) => {
             <>
                 {[...Array(4)].map((_, i) => (
                   <div key={i} className="flex flex-col space-y-4">
-                    <Skeleton className="h-48 w-full rounded-lg" />
+                    <Skeleton className="h-36 w-full rounded-lg" />
                     <Skeleton className="h-6 w-3/4 rounded" />
                     <Skeleton className="h-4 w-1/2 rounded" />
                     <div className="flex gap-4">

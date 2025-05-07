@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { listingType } from "@/types/types";
 import { Building2} from "lucide-react";
+import { useRouter } from "next/navigation";
+// import { useUser } from "@/context/UserContext";
 
 interface ListingCardProps {
   listing: listingType;
@@ -12,34 +14,42 @@ interface ListingCardProps {
 }
 
 const ListingCard: React.FC<ListingCardProps> = ({ listing, onViewDetails }) => {
+  const router = useRouter();
+
+  const handleRequest = () => {
+    router.push(`/request-listing/${listing._id}`);
+  };
+  
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-      <div className="relative w-full h-48">
+      <div className="relative w-full h-36">
         <Image
           src={listing?.rentalImages[0] || "https://via.placeholder.com/400"}
           alt={listing?.house_description}
           fill
-          className="object-cover bg-gray-200"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="object-cover bg-gray-100"
         />
       </div>
 
-      <div className="p-4">
-        <h3 className="text-xl font-semibold mb-2 flex gap-2">
+      <div className="p-3 space-y-1">
+        <h3 className="text-lg font-semibold flex gap-2">
           <Building2/>
           {listing?.rentalHouseLocation}</h3>
-        <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
+        <div className="flex items-center gap-2 text-sm text-gray-600">
           <span>{listing?.numberOfBedrooms} Bedrooms</span>
           <span>•</span>
-          <span>${listing?.rentAmount}/mo</span>
+          <span className="text-[#5274b8] font-medium text-lg">${listing?.rentAmount}/mo</span>
         </div>
         <p className="text-sm text-gray-500 line-clamp-2">
           {listing?.house_description}</p>
       </div>
 
-      <div className="p-4 flex justify-center ">
-        <Button variant="outline" className="w-full cursor-pointer" onClick={onViewDetails}>
-          View Details
+      <div className="p-4 pt-0 flex justify-between gap-2">
+        <Button variant="outline" className="flex-1 cursor-pointer border-[#5274b8] text-[#5274b8]" onClick={onViewDetails}>
+          Details
+        </Button>
+        <Button variant="default" className="flex-1 cursor-pointer" onClick={handleRequest}>
+          Request
         </Button>
       </div>
     </div>

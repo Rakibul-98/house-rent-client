@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import 'swiper/css';
 @import 'swiper/css/pagination';
+@import 'keen-slider/keen-slider.min.css';
+
 
 @plugin "tailwindcss-animate";
 
