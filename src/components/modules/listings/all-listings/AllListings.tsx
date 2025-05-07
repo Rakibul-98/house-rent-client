@@ -14,7 +14,6 @@ const AllListings = ({ data }: { data: listingType[] }) => {
     router.push(`/listing-details/${listingId}`);
   };
 
-  // Handle search
   const handleSearch = (query: string) => {
     const filtered = data.filter((listing) =>
       listing.rentalHouseLocation.toLowerCase().includes(query.toLowerCase())
@@ -22,7 +21,6 @@ const AllListings = ({ data }: { data: listingType[] }) => {
     setFilteredData(filtered);
   };
 
-  // Handle rent range
   const handleRentRangeChange = (min: number, max: number) => {
     const filtered = data.filter(
       (listing) => listing.rentAmount >= min && listing.rentAmount <= max
@@ -30,7 +28,6 @@ const AllListings = ({ data }: { data: listingType[] }) => {
     setFilteredData(filtered);
   };
 
-  // Handle bedrooms range
   const handleBedroomsRangeChange = (min: number, max: number) => {
     const filtered = data.filter(
       (listing) =>
@@ -39,7 +36,6 @@ const AllListings = ({ data }: { data: listingType[] }) => {
     setFilteredData(filtered);
   };
 
-  // Handle sort
   const handleSort = (sort: string) => {
     const sorted = [...filteredData];
     switch (sort) {
@@ -54,6 +50,21 @@ const AllListings = ({ data }: { data: listingType[] }) => {
         break;
       case "bedrooms_desc":
         sorted.sort((a, b) => b.numberOfBedrooms - a.numberOfBedrooms);
+        break;
+      case "newest":
+        sorted.sort((a, b) => {
+          const dateA = new Date(a.createdAt ?? "1970-01-01");
+          const dateB = new Date(b.createdAt ?? "1970-01-01");
+          return dateB.getTime() - dateA.getTime();
+        });
+        
+        break;
+      case "oldest":
+        sorted.sort((a, b) => {
+          const dateA = new Date(a.createdAt ?? "1970-01-01");
+          const dateB = new Date(b.createdAt ?? "1970-01-01");
+          return dateA.getTime() - dateB.getTime();
+        });
         break;
       default:
         break;
@@ -78,35 +89,40 @@ const AllListings = ({ data }: { data: listingType[] }) => {
   }, [data]);
 
   return (
-    <div className="container mx-auto p-6 xl:px-5">
-      <AllListingsHeader
-        onSearch={handleSearch}
-        onRentRangeChange={handleRentRangeChange}
-        onBedroomsRangeChange={handleBedroomsRangeChange}
-        onSortChange={handleSort}
-        minRent={minRent}
-        maxRent={maxRent}
-        minBedrooms={minBedrooms}
-        maxBedrooms={maxBedrooms}
-      />
-      {filteredData.length === 0 ? (
-        <div className="flex flex-col items-center justify-center h-96">
-          <p className="text-xl text-gray-600">No listings found.</p>
-          <p className="text-sm text-gray-500">
-            Try another location or adjust your filters.
-          </p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredData.map((listing) => (
-            <ListingCard
-              key={listing._id}
-              listing={listing}
-              onViewDetails={() => handleViewDetails(listing._id)}
-            />
-          ))}
-        </div>
-      )}
+    <div className="w-[90%] mx-auto mt-5 flex gap-5">
+      <div className=" shadow rounded-lg p-4 h-fit">
+        <AllListingsHeader
+          onSearch={handleSearch}
+          onRentRangeChange={handleRentRangeChange}
+          onBedroomsRangeChange={handleBedroomsRangeChange}
+          onSortChange={handleSort}
+          minRent={minRent}
+          maxRent={maxRent}
+          minBedrooms={minBedrooms}
+          maxBedrooms={maxBedrooms}
+        />
+      </div>
+
+      <div className="flex-1">
+        {filteredData.length === 0 ? (
+          <div className="flex flex-col items-center justify-center h-96">
+            <p className="text-xl text-gray-600">No listings found.</p>
+            <p className="text-sm text-gray-500">
+              Try another location or adjust your filters.
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredData.map((listing) => (
+              <ListingCard
+                key={listing._id}
+                listing={listing}
+                onViewDetails={() => handleViewDetails(listing._id)}
+              />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

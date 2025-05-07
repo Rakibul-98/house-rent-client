@@ -1,4 +1,5 @@
 import HeroSection from "@/components/home/heroSection/HeroSection";
+import Promotion from "@/components/home/promotion/Promotion";
 import TestimonialSection from "@/components/home/testimonial/Testimonial";
 import TrendingRentsSection from "@/components/home/trendingRents/TrendingRents";
 import WhyChooseUsSection from "@/components/home/whyChooseUs/WhyChooseUs";
@@ -18,6 +19,7 @@ const HomePage = async () => {
       <HeroSection />
       <TrendingRentsSection data={allListing?.result} />
       <TestimonialSection />
+      <Promotion/>
       <WhyChooseUsSection />
     </div>
   );

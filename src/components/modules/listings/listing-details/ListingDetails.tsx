@@ -2,23 +2,34 @@
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
 import Image from "next/image";
 import { listingType } from "@/types/types";
 import { useUser } from "@/context/UserContext";
 import CreateRequestModal from "../../request/create-request/CreateRequestForm";
 import { useState } from "react";
-import { FileText, Info, MessageCircle, Send } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  FileText,
+  Info,
+  MessageCircle,
+  Send,
+} from "lucide-react";
+
+import { useKeenSlider } from "keen-slider/react";
 
 const ListingDetails = ({ listing }: { listing?: listingType }) => {
   const { user } = useUser();
   const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
+    loop: true,
+    slides: { perView: 1 },
+    slideChanged(slider) {
+      setCurrentSlide(slider.track.details.rel);
+    },
+  });
 
   const handleRequest = (listingId: string | undefined) => {
     setIsRequestModalOpen(true);
@@ -26,7 +37,7 @@ const ListingDetails = ({ listing }: { listing?: listingType }) => {
   };
 
   return (
-    <div className="container mx-auto p-6 lg:p-10">
+    <div className="w-[90%] mx-auto my-10">
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6">
         <h1 className="text-3xl font-bold mb-4 lg:mb-0">
           {listing?.house_description?.split(" ").slice(0, 4).join(" ")}...
@@ -40,27 +51,59 @@ const ListingDetails = ({ listing }: { listing?: listingType }) => {
         </Badge>
       </div>
 
-      <div className="mb-8 rounded-lg">
-        <Carousel className="w-[80%] max-w-4xl mx-auto ">
-          <CarouselContent>
+      <div className="mb-8">
+        <div className="relative">
+          {/* Slider Container */}
+          <div
+            ref={sliderRef}
+            className="keen-slider rounded-md overflow-hidden"
+          >
             {listing?.rentalImages.map((image, index) => (
-              <CarouselItem key={index}>
-                <div className="relative w-full h-64 md:h-80 lg:h-96 rounded-lg overflow-hidden ">
-                  <Image
-                    src={image}
-                    alt={`Listing Image ${index + 1}`}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              </CarouselItem>
+              <div
+                key={index}
+                className="keen-slider__slide relative w-full h-64 md:h-80 lg:h-96"
+              >
+                <Image
+                  src={image}
+                  alt={`Listing Image ${index + 1}`}
+                  fill
+                  className="object-cover"
+                />
+              </div>
             ))}
-          </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel>
+          </div>
+          <div className="absolute inset-0 flex justify-between items-center px-2 pointer-events-none">
+            <Button
+              variant="outline"
+              onClick={() => instanceRef.current?.prev()}
+              className="pointer-events-auto rounded-full w-10 h-10 p-2"
+            >
+              <ArrowLeft className="w-4 h-4" />
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => instanceRef.current?.next()}
+              className="pointer-events-auto rounded-full w-10 h-10 p-2"
+            >
+              <ArrowRight className="w-4 h-4" />
+            </Button>
+          </div>
+        </div>
+
+        <div className="flex justify-center space-x-2 mt-2">
+          {listing?.rentalImages.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => instanceRef.current?.moveToIdx(idx)}
+              className={`w-3 h-3 rounded-full cursor-pointer transition-all ${
+                currentSlide === idx ? "bg-blue-500" : "bg-gray-300"
+              }`}
+            />
+          ))}
+        </div>
       </div>
 
+      {/* 📄 Listing Info */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
           <div className="bg-white p-6 rounded-lg shadow-md border">
@@ -69,19 +112,19 @@ const ListingDetails = ({ listing }: { listing?: listingType }) => {
               Property Details
             </h2>
             <div className="space-y-4">
-              <div className="flex  gap-4">
+              <div className="flex gap-4">
                 <span className="font-medium">Location:</span>
                 <span>{listing?.rentalHouseLocation}</span>
               </div>
-              <div className="flex items-center gap-4">
+              <div className="flex gap-4">
                 <span className="font-medium">Bedrooms:</span>
                 <span>{listing?.numberOfBedrooms}</span>
               </div>
-              <div className="flex items-center gap-4">
+              <div className="flex gap-4">
                 <span className="font-medium">Rent:</span>
                 <span>${listing?.rentAmount}/mo</span>
               </div>
-              <div className="flex  gap-4">
+              <div className="flex gap-4">
                 <span className="font-medium">Features:</span>
                 <div className="flex flex-wrap gap-2">
                   {listing?.features.map((feature, index) => (
@@ -100,21 +143,22 @@ const ListingDetails = ({ listing }: { listing?: listingType }) => {
           </div>
         </div>
 
+        {/* 📞 Contact Owner */}
         <div className="bg-white p-6 rounded-lg shadow-md border">
           <h2 className="text-xl font-semibold mb-4 flex gap-2">
             <MessageCircle />
             Contact Owner
           </h2>
           <div className="space-y-4">
-            <div className="flex items-center gap-4">
+            <div className="flex gap-4">
               <span className="font-medium">Name:</span>
               <span>{listing?.owner.user_name}</span>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex gap-4">
               <span className="font-medium">Email:</span>
               <span>{listing?.owner.email}</span>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex gap-4">
               <span className="font-medium">Phone:</span>
               <span>**********</span>
             </div>
@@ -125,11 +169,11 @@ const ListingDetails = ({ listing }: { listing?: listingType }) => {
           </div>
           <div className="mt-6 space-y-4">
             <Button
-              disabled={user?.role != "tenant"}
+              disabled={user?.role !== "tenant"}
               onClick={() => handleRequest(listing?._id)}
               className="w-full text-xs md:text-md"
             >
-              {user?.role != "tenant"
+              {user?.role !== "tenant"
                 ? "Only Tenant can Request a Rent"
                 : "Request to Rent"}{" "}
               <Send />
@@ -141,6 +185,7 @@ const ListingDetails = ({ listing }: { listing?: listingType }) => {
         </div>
       </div>
 
+      {/* 🧾 Extra Info */}
       <div className="mt-8 bg-white p-6 rounded-lg shadow-md border">
         <h2 className="text-xl font-semibold mb-4 flex gap-2 items-center">
           <Info />
@@ -166,6 +211,8 @@ const ListingDetails = ({ listing }: { listing?: listingType }) => {
           </div>
         </div>
       </div>
+
+      {/* 📨 Request Modal */}
       {listing && (
         <CreateRequestModal
           listing={listing}
