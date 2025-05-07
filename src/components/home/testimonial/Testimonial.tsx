@@ -1,10 +1,8 @@
 "use client";
 
+import { useKeenSlider } from "keen-slider/react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/pagination";
+import Title from "../Shared/Title";
 
 const testimonials = [
   {
@@ -43,35 +41,52 @@ const testimonials = [
 
 export default function TestimonialCarousel() {
 
-  return (
-    <section id="testimonial" className="py-16">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-10">
-          What Our Users Say
-        </h2>
+  const [sliderRef] = useKeenSlider({
+    loop: true,
+    slides: {
+      perView: 2,
+      spacing: 20,
+    },
+    breakpoints: {
+      "(max-width: 768px)": {
+        slides: {
+          perView: 1,
+        },
+      },
+    },
+    renderMode: "performance",
+    created: (slider) => {
+      setInterval(() => {
+        slider.next();
+      }, 1500);
+    },
+  });
 
-        <Swiper
-          modules={[Autoplay, Pagination]}
-          slidesPerView={1}
-          autoplay={{ delay: 5000 }}
-          pagination={{ clickable: true }}
-        >
-          {testimonials.map((testimonial) => (
-            <SwiperSlide key={testimonial.id}>
-              <div className="text-center">
-                <Avatar className="w-18 h-18 mx-auto mb-2">
-                  <AvatarImage src={testimonial.avatar} alt={testimonial.name} />
-                  <AvatarFallback>{testimonial.name[0]}</AvatarFallback>
-                </Avatar>
-                <h3 className="text-xl font-semibold">{testimonial.name}</h3>
-                <p className="text-sm text-gray-500 mb-4">{testimonial.role}</p>
-                <p className="text-gray-600 italic max-w-2xl mx-auto mb-12">
-                &quot;{testimonial.comment}&quot;
-                </p>
-              </div>
-            </SwiperSlide>
+  return (
+    <section id="testimonial" className="my-16">
+      <div className="w-[90%] mx-auto">
+        <div className="flex justify-center mb-10">
+          <Title title="What Our Users Say" />
+        </div>
+
+        <div ref={sliderRef} className="keen-slider">
+          {testimonials.map((t) => (
+            <div
+              key={t.id}
+              className="keen-slider__slide bg-gray-50 rounded-md p-6 text-center"
+            >
+              <Avatar className="w-18 h-18 mx-auto mb-2">
+                <AvatarImage src={t.avatar} alt={t.name} />
+                <AvatarFallback>{t.name[0]}</AvatarFallback>
+              </Avatar>
+              <h3 className="text-xl font-semibold">{t.name}</h3>
+              <p className="text-sm text-gray-500 mb-2">{t.role}</p>
+              <p className="text-gray-600 italic max-w-md mx-auto">
+                &quot;{t.comment}&quot;
+              </p>
+            </div>
           ))}
-        </Swiper>
+        </div>
       </div>
     </section>
   );

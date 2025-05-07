@@ -92,18 +92,9 @@ export default function Navbar() {
           {links.map(({ name, path }) => {
             const isActive = pathname === path;
             return (
-              // <Link
-              //   className={`px-1 border-black hover:border-b-3 ${
-              //     isActive && "text-black border-b-3 font-medium"
-              //   }`}
-              //   href={path}
-              //   key={name}
-              // >
-              //   {name}
-              // </Link>
               <>
                 {name === "Location" ? (
-                  <DropdownMenu key={name}>
+                  <DropdownMenu>
                     <DropdownMenuTrigger
                       className={`px-1 border-black hover:border-b-3 focus:outline-none focus-visible:ring-0 focus-visible:outline-none ${
                         isActive && "text-black border-b-3 font-medium"
