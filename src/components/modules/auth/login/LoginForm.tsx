@@ -21,23 +21,23 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { useUser } from "@/context/UserContext";
-import { IdCard, KeyRound, MapPinHouse } from "lucide-react";
+import { IdCard, KeyRound } from "lucide-react";
 
 export default function LoginForm() {
   const form = useForm({
     resolver: zodResolver(loginValidationSchema),
   });
 
-    const searchParams = useSearchParams();
-    const redirect = searchParams.get("redirectPath");
-    const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirectPath");
+  const router = useRouter();
   const [reCaptchaStatus, setReCaptchaStatus] = useState(false);
 
   const {
     formState: { isSubmitting },
   } = form;
-
-  const {setIsLoading} = useUser();
+  const { setValue } = form;
+  const { setIsLoading } = useUser();
 
   const handleReCaptcha = async (value: string | null) => {
     try {
@@ -71,13 +71,41 @@ export default function LoginForm() {
     }
   };
 
+  const loginPresets = [
+    {
+      label: "User Login",
+      onClick: () => {
+        setValue("email", "test@tenant.com");
+        setValue("password", "12345678");
+      },
+    },
+    {
+      label: "Admin Login",
+      onClick: () => {
+        setValue("email", "admin@gmail.com");
+        setValue("password", "12345678");
+      },
+    },
+  ];
+
   return (
-    <div className=" rounded-xl flex-grow max-w-xs w-[95%] p-5 shadow-2xl">
-      <div className="flex items-center gap-2 mb-5">
-        <MapPinHouse />
-        <div>
-          <h1 className="text-xl ">Welcome back! <span className="italic text-blue-600 font-semibold">Login</span> Here</h1>
-        </div>
+    <div className="rounded-md bg-white/95 p-5 shadow-2xl px-10">
+        <h1 className="text-xl text-center border-b-4 border-[#5274b8] w-fit font-serif">
+          Welcome back!{" "}
+          <span className="italic text-[#5274b8] font-semibold">Login</span>{" "}
+          Here
+        </h1>
+      <div className="flex gap-3 my-5">
+        {loginPresets.map((preset, idx) => (
+          <button
+            key={idx}
+            type="button"
+            onClick={preset.onClick}
+            className="w-1/2 hover:bg-secondary border cur px-4 py-1 rounded-md"
+          >
+            {preset.label}
+          </button>
+        ))}
       </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -86,7 +114,9 @@ export default function LoginForm() {
             name="email"
             render={({ field }) => (
               <FormItem className="mb-3">
-                <FormLabel><IdCard/> User ID</FormLabel>
+                <FormLabel>
+                  <IdCard /> User ID
+                </FormLabel>
                 <FormControl>
                   <Input type="email" {...field} value={field.value || ""} />
                 </FormControl>
@@ -99,7 +129,9 @@ export default function LoginForm() {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel><KeyRound/> Password</FormLabel>
+                <FormLabel>
+                  <KeyRound /> Password
+                </FormLabel>
                 <FormControl>
                   <Input type="password" {...field} value={field.value || ""} />
                 </FormControl>
@@ -125,8 +157,11 @@ export default function LoginForm() {
         </form>
       </Form>
       <p className="text-sm text-gray-600 text-center my-3">
-        Do not have any account? 
-        <Link href="/register" className=" ms-1 underline text-blue-600 font-semibold italic hover:no-underline">
+        Do not have any account?
+        <Link
+          href="/register"
+          className=" ms-1 underline text-[#5274b8] font-semibold italic hover:no-underline"
+        >
           Register Now
         </Link>
       </p>

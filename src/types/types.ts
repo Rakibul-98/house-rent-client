@@ -15,6 +15,9 @@ export type userType = {
 
 export type listingType = {
   _id: string;
+  propertyTitle: string;
+  areaSize: number;
+  houseType:"Apartment" | "Duplex" | "Single Family" | "Shared Room" | "Penthouse";
   createdAt?: string;
   updatedAt?: string;
   house_description: string;

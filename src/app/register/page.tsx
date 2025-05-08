@@ -6,16 +6,23 @@ import { Suspense } from "react";
 export default function RegisterPage() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <div className="min-h-screen flex items-center justify-center gap-10 my-10">
-        <title>Registration - House Finder</title>
-        <RegisterForm />
-        <Image
-          className="hidden lg:block"
-          src={registerImg}
-          alt="House Rent Logo"
-          width={600}
-          height={500}
-        />
+      <div className="lg:w-[90%] mx-auto">
+        <div className="min-h-screen flex flex-col lg:flex-row relative">
+          <title>Registration - House Finder</title>
+          <div className="relative z-10 min-h-screen flex items-center justify-center w-full lg:w-1/2 my-5 lg:my-0">
+            <RegisterForm />
+          </div>
+          <div className="absolute inset-0 lg:relative lg:w-1/2">
+            <Image
+              src={registerImg}
+              alt="Register img"
+              fill
+              className="object-cover lg:object-contain"
+              priority
+            />
+            <div className="absolute inset-0 bg-black/50 lg:hidden" />
+          </div>
+        </div>
       </div>
     </Suspense>
   );

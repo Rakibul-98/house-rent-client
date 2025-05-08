@@ -64,15 +64,10 @@ export default function RegisterForm() {
   };
 
   return (
-    <div className=" rounded-xl flex-grow max-w-md w-full p-5 shadow-2xl">
-      <div className="flex items-center mb-5 gap-2 ">
-        <div>
-          <h1 className="text-xl font-semibold">
-            Join us today and start your journey!
+    <div className="bg-white/95 rounded-md  p-5 shadow-2xl">
+          <h1 className=" text-xl font-serif border-b-4 border-[#5274b8] mb-5 w-fit">
+            Great to see you! Register Now
           </h1>
-          <p className="font-extralight text-sm text-gray-600"></p>
-        </div>
-      </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
