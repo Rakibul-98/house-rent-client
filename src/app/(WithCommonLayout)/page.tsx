@@ -1,3 +1,4 @@
+import FAQ from "@/components/home/faq/FAQ";
 import HeroSection from "@/components/home/heroSection/HeroSection";
 import Promotion from "@/components/home/promotion/Promotion";
 import TestimonialSection from "@/components/home/testimonial/Testimonial";
@@ -20,6 +21,7 @@ const HomePage = async () => {
       <TrendingRentsSection data={allListing?.result} />
       <TestimonialSection />
       <Promotion/>
+      <FAQ/>
       <WhyChooseUsSection />
     </div>
   );

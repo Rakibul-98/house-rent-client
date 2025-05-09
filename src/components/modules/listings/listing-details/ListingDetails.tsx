@@ -5,7 +5,6 @@ import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { listingType } from "@/types/types";
 import { useUser } from "@/context/UserContext";
-import CreateRequestModal from "../../request/create-request/CreateRequestForm";
 import { useState } from "react";
 import {
   ArrowLeft,
@@ -17,11 +16,12 @@ import {
 } from "lucide-react";
 
 import { useKeenSlider } from "keen-slider/react";
+import { useRouter } from "next/navigation";
 
 const ListingDetails = ({ listing }: { listing?: listingType }) => {
   console.log(listing);
   const { user } = useUser();
-  const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
+  const router = useRouter();
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
@@ -33,8 +33,7 @@ const ListingDetails = ({ listing }: { listing?: listingType }) => {
   });
 
   const handleRequest = (listingId: string | undefined) => {
-    setIsRequestModalOpen(true);
-    console.log(listingId);
+    router.push(`/request-listing/${listingId}`);
   };
 
   const propertDetails = [
@@ -44,7 +43,7 @@ const ListingDetails = ({ listing }: { listing?: listingType }) => {
     { label: "Area Size", value: `${listing?.areaSize} sq ft` },
     { label: "Bedrooms", value: listing?.numberOfBedrooms },
     { label: "Rent", value: `$${listing?.rentAmount}/mo` },
-  ]
+  ];
 
   return (
     <div className="w-[90%] mx-auto my-10">
@@ -186,9 +185,9 @@ const ListingDetails = ({ listing }: { listing?: listingType }) => {
                 : "Request to Rent"}{" "}
               <Send />
             </Button>
-            <Button variant="outline" className="w-full cursor-pointer">
+            {/* <Button variant="outline" className="w-full cursor-pointer">
               Save Listing
-            </Button>
+            </Button> */}
           </div>
         </div>
       </div>
@@ -218,14 +217,6 @@ const ListingDetails = ({ listing }: { listing?: listingType }) => {
           </div>
         </div>
       </div>
-
-      {listing && (
-        <CreateRequestModal
-          listing={listing}
-          isOpen={isRequestModalOpen}
-          onOpenChange={setIsRequestModalOpen}
-        />
-      )}
     </div>
   );
 };

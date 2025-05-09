@@ -104,7 +104,7 @@ const AllListings = ({ data }: { data: listingType[] }) => {
 
   return (
     <div className="w-[90%] min-h-[80vh] mx-auto mt-5 flex gap-5">
-      <div className=" shadow rounded-lg p-4 h-fit">
+      <div className="shadow rounded-lg p-4 h-fit">
         <AllListingsHeader
           onSearch={handleSearch}
           onRentRangeChange={handleRentRangeChange}

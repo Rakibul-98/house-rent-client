@@ -44,7 +44,7 @@ const reasons = [
 
 export default function WhyChooseUsSection() {
   return (
-    <section className="my-16">
+    <section className="mt-10 mb-16">
       <div className="w-[90%] mx-auto">
         <div className="flex justify-center mb-10">
           <Title title="Why Choose Us?" />
