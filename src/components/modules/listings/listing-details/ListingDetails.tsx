@@ -57,7 +57,6 @@ const ListingDetails = ({ listing }: { listing?: listingType }) => {
           >
             {listing?.isAvailable ? "Available" : "Not Available"}
           </Badge>
-          {/* Slider Container */}
           {!listing?.rentalImages || listing.rentalImages.length === 0 ? (
             <div className="w-full h-64 md:h-80 lg:h-96 rounded-md bg-gray-200 animate-pulse flex items-center justify-center"></div>
           ) : (
@@ -112,7 +111,6 @@ const ListingDetails = ({ listing }: { listing?: listingType }) => {
         </div>
       </div>
 
-      {/* 📄 Listing Info */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 ">
         <div className="lg:col-span-2">
           <div className="p-6 rounded shadow-md bg-gray-50">
@@ -154,7 +152,6 @@ const ListingDetails = ({ listing }: { listing?: listingType }) => {
           </div>
         </div>
 
-        {/* 📞 Contact Owner */}
         <div className="p-6 rounded shadow-md bg-gray-50 flex flex-col justify-between">
           <h2 className="text-xl font-semibold mb-4 flex gap-2">
             <MessageCircle />
@@ -196,7 +193,6 @@ const ListingDetails = ({ listing }: { listing?: listingType }) => {
         </div>
       </div>
 
-      {/* 🧾 Extra Info */}
       <div className="mt-5 p-6 rounded shadow-md bg-gray-50">
         <h2 className="text-xl font-semibold mb-4 flex gap-2 items-center">
           <Info />
@@ -223,7 +219,6 @@ const ListingDetails = ({ listing }: { listing?: listingType }) => {
         </div>
       </div>
 
-      {/* 📨 Request Modal */}
       {listing && (
         <CreateRequestModal
           listing={listing}

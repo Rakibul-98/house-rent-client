@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
+import Title from "@/components/home/Shared/Title";
 
 interface AllListingPageProps {
   data: listingType[];
@@ -137,7 +138,7 @@ const AllListingPage = ({
   return (
     <div>
       <div className="md:flex justify-between items-center mb-4">
-        <h3 className="font-bold text-xl mb-2 md:mb-0">Lists</h3>
+        <Title title="All Listings" />
         <Input
           type="text"
           placeholder="Search by location..."

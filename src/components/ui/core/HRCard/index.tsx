@@ -7,6 +7,7 @@ import { listingType } from "@/types/types";
 import { Building2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Tilt from "react-parallax-tilt";
+import { useUser } from "@/context/UserContext";
 
 interface ListingCardProps {
   listing: listingType;
@@ -18,6 +19,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
   onViewDetails,
 }) => {
   const router = useRouter();
+  const { user } = useUser();
 
   const handleRequest = () => {
     router.push(`/request-listing/${listing._id}`);
@@ -62,6 +64,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
           </Button>
           <Button
             variant="default"
+            disabled={user?.role !== "tenant"}
             className="flex-1 cursor-pointer"
             onClick={handleRequest}
           >

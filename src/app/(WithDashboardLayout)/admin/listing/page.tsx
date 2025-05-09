@@ -9,7 +9,7 @@ const AdminListingDashboard = async ({searchParams}:{searchParams: Promise<{page
 
   return (
     <div>
-      <title>Dashboard - Admin</title>
+      <title>Listings - Admin</title>
       <AllListingPage data={data?.result} totalData={data?.totalData} />
     </div>
   );

@@ -6,7 +6,7 @@ type Role = keyof typeof roleBasedPrivateRoutes;
 const authRoutes = ["/login", "/register"];
 
 const roleBasedPrivateRoutes = {
-  tenant: [/^\/tenant/, /^\/create-request/],
+  tenant: [/^\/tenant/, /^\/create-request/, /^\/request-listing\/[a-zA-Z0-9]+$/ ],
   owner: [/^\/owner/, /^\/create-listing/],
   admin: [/^\/admin/],
 };
@@ -21,7 +21,7 @@ export const middleware = async (request: NextRequest) => {
     } else {
       return NextResponse.redirect(
         new URL(
-          `https://house-rent-client.onrender.com/login?redirectPath=${pathname}`,
+          `https://house-finder-rakibul.vercel.app/login?redirectPath=${pathname}`,
           request.url
         )
       ); 
@@ -48,5 +48,6 @@ export const config = {
     "/tenat/:page",
     "/owner",
     "/owner/:page",
+    "/request-listing/:path*",
   ],
 };

@@ -51,9 +51,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         ? [
             {
               title: "Listings",
-              url: `/${user?.role}/listing`,
+              url: "#",
               icon: Building,
-              items: [
+              items: [{
+                  title: "All Listings",
+                  url: `/${user?.role}/listing`,
+                  icon: Building,
+              },
                 ...(user?.role === "owner"
                   ? [
                       {

@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { verifyPayment } from "@/services/payment";
 import { toast } from "sonner";
 import { Suspense } from "react";
+import { Loader2 } from "lucide-react";
 
 const PaymentSuccessPage = () => {
   const router = useRouter();
@@ -32,7 +33,13 @@ const PaymentSuccessPage = () => {
   }, [searchParams]);
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense
+      fallback={
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <Loader2 className="animate-spin h-12 w-12 text-primary" />
+        </div>
+      }
+    >
       <div className="lg:w-[90%] mx-auto">
         <div className="min-h-screen flex flex-col lg:flex-row relative">
           <title>Login - House Finder</title>
@@ -52,13 +59,14 @@ const PaymentSuccessPage = () => {
             <div className="rounded-md text-center max-w-md bg-white/85 p-5 shadow-2xl px-10">
               <h1 className="text-3xl font-bold mt-6">Payment Successful!</h1>
               <p className="mt-4 leading-6">
-                Thank you for your payment. <br /> Your transaction has been completed successfully. Now you can contact the owner.
+                Thank you for your payment. <br /> Your transaction has been
+                completed successfully. Now you can contact the owner.
               </p>
 
               <p className="text-lg mt-4">Have a great day! 🎉</p>
 
               <Button
-              variant="default"
+                variant="default"
                 onClick={() => router.push("/")}
                 className="mt-6 w-full"
               >

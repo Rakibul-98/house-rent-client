@@ -20,6 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
+import Title from "@/components/home/Shared/Title";
 
 const AllUsersPage = ({ data }: { data: userType[] }) => {
   const { user } = useUser();
@@ -118,7 +119,7 @@ const AllUsersPage = ({ data }: { data: userType[] }) => {
   return (
     <div>
       <div className="md:flex justify-between items-center mb-4">
-        <h3 className="font-bold text-xl mb-2 md:mb-0">Users</h3>
+        <Title title="All Users" />
         <div className="flex gap-4">
           <Input
             type="text"

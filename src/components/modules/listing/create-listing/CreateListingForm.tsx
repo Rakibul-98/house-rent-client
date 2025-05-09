@@ -7,7 +7,6 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -17,10 +16,11 @@ import { listingValidationSchema } from "./listingValidation";
 import HRImageUploader from "@/components/ui/core/HRImageUploader";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { FileText, X } from "lucide-react";
+import { X } from "lucide-react";
 import { toast } from "sonner";
 import { createListing } from "@/services/Listing";
 import { useRouter } from "next/navigation";
+import Title from "@/components/home/Shared/Title";
 
 export default function CreateListingForm() {
   const form = useForm({
@@ -64,14 +64,73 @@ export default function CreateListingForm() {
   };
 
   return (
-    <div className="shadow-2xl rounded-xl flex-grow max-w-md w-full p-5">
-      <div className="mb-5">
-        <h1 className="text-xl font-semibold flex gap-2 items-center">
-          <FileText /> List your property for rent!
-        </h1>
+    <div className="shadow-2xl rounded-xl flex-grow max-w-xl w-full p-5">
+      <div className="mb-5 w-fit">
+        <Title title=" List your property"/>
       </div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-5 items-start"
+        >
+          <FormField
+            control={form.control}
+            name="propertyTitle"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Property Title</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    placeholder="e.g. Cozy 2-bedroom in city center"
+                  />
+                </FormControl>
+                
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="areaSize"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Area Size (sq ft)</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    onChange={(e) => field.onChange(Number(e.target.value))}
+                    placeholder="Enter property size"
+                  />
+                </FormControl>
+                
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="houseType"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>House Type</FormLabel>
+                <FormControl>
+                  <select
+                    {...field}
+                    className="w-full border px-3 py-2 rounded-md focus:outline-none"
+                  >
+                    <option value="">Select Type</option>
+                    <option value="Apartment">Apartment</option>
+                    <option value="Duplex">Duplex</option>
+                    <option value="Single Family">Single Family</option>
+                    <option value="Shared Room">Shared Room</option>
+                    <option value="Penthouse">Penthouse</option>
+                  </select>
+                </FormControl>
+                
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="rentalHouseLocation"
@@ -81,7 +140,7 @@ export default function CreateListingForm() {
                 <FormControl>
                   <Input {...field} placeholder="Enter property location" />
                 </FormControl>
-                <FormMessage />
+                
               </FormItem>
             )}
           />
@@ -97,48 +156,45 @@ export default function CreateListingForm() {
                     placeholder="Describe your property (10-500 characters)"
                   />
                 </FormControl>
-                <FormMessage />
+                
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="rentAmount"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Rent Amount</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    onChange={(e) => field.onChange(Number(e.target.value))}
+                    placeholder="Enter rent amount"
+                  />
+                </FormControl>
+                
               </FormItem>
             )}
           />
 
-          <div className="grid grid-cols-2 gap-5">
-            <FormField
-              control={form.control}
-              name="rentAmount"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Rent Amount</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      onChange={(e) => field.onChange(Number(e.target.value))}
-                      placeholder="Enter rent amount"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="numberOfBedrooms"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Bedrooms</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      onChange={(e) => field.onChange(Number(e.target.value))}
-                      placeholder="Enter number of bedrooms"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
+          <FormField
+            control={form.control}
+            name="numberOfBedrooms"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Bedrooms</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    onChange={(e) => field.onChange(Number(e.target.value))}
+                    placeholder="Enter number of bedrooms"
+                  />
+                </FormControl>
+                
+              </FormItem>
+            )}
+          />
 
           <FormField
             control={form.control}
@@ -153,12 +209,12 @@ export default function CreateListingForm() {
                     placeholder="Enter features (comma-separated)"
                   />
                 </FormControl>
-                <FormMessage />
+                
               </FormItem>
             )}
           />
 
-          <div className="flex flex-col md:flex-row gap-5">
+          <div className="col-span-2 flex flex-col md:flex-row gap-5">
             <HRImageUploader
               setImageFiles={setImageFiles}
               setImagePreview={setImagePreview}
@@ -203,7 +259,11 @@ export default function CreateListingForm() {
               ))}
           </div>
 
-          <Button type="submit" className="mt-2 w-full" disabled={isSubmitting || isUploading}>
+          <Button
+            type="submit"
+            className="mt-2 w-full col-span-2"
+            disabled={isSubmitting || isUploading}
+          >
             {isUploading
               ? "Uploading Images..."
               : isSubmitting

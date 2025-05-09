@@ -1,29 +1,18 @@
-import WelcomePage from '@/components/modules/dashboard/content/DashboardOverviewPage'
-import { FileText, View } from 'lucide-react'
+import OwnerOverview from '@/components/modules/dashboard/content/OwnerOverview'
+import { getAllListing } from '@/services/Listing'
+import { getAllRequests } from '@/services/request'
 import React from 'react'
 
-export default function page() {
-
-  const content = {
-      title: "Manage Your Properties",
-      description: "Create, update, and manage your property listings. Track requests and approvals.",
-      actions: [
-        {
-          icon: <FileText  />,
-          title: "Create Listing",
-          description: "Add a new property to your listings."
-        },
-        {
-          icon: <View  />,
-          title: "Manage Requests",
-          description: "See all your property listings and their status.",
-        },
-      ],
-    }
+const OwnerDashboardPage = async () => {
+  const { data: requests } = await getAllRequests(undefined);
+    const { data: listings } = await getAllListing(undefined);
 
   return (
     <div>
-      <WelcomePage content={content}/>
+      <OwnerOverview requests={requests?.result || []}
+        listings={listings?.result || []} />
     </div>
   )
 }
+
+export default OwnerDashboardPage;

@@ -2,10 +2,17 @@ import RegisterForm from "@/components/modules/auth/register/RegisterForm";
 import Image from "next/image";
 import registerImg from "../../assets/svg/signup.svg";
 import { Suspense } from "react";
+import { Loader2 } from "lucide-react";
 
 export default function RegisterPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense
+      fallback={
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <Loader2 className="animate-spin h-12 w-12 text-primary" />
+        </div>
+      }
+    >
       <div className="lg:w-[90%] mx-auto">
         <div className="min-h-screen flex flex-col lg:flex-row relative">
           <title>Registration - House Finder</title>

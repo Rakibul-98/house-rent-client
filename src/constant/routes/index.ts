@@ -8,5 +8,6 @@ export const protectedRoutes = [
     "/owner",
     "/owner/:page",
     "/user-profile",
-    "/payment-success"
+    "/payment-success",
+    "/request-listing/:page"
 ];

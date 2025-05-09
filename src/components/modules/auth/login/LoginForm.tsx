@@ -80,6 +80,13 @@ export default function LoginForm() {
       },
     },
     {
+      label: "Owner Login",
+      onClick: () => {
+        setValue("email", "test@owner.com");
+        setValue("password", "12345678");
+      },
+    },
+    {
       label: "Admin Login",
       onClick: () => {
         setValue("email", "admin@gmail.com");
@@ -101,7 +108,7 @@ export default function LoginForm() {
             key={idx}
             type="button"
             onClick={preset.onClick}
-            className="w-1/2 hover:bg-secondary border cur px-4 py-1 rounded-md"
+            className="w-1/2 hover:bg-secondary border cur px-4 py-1 rounded-md whitespace-nowrap"
           >
             {preset.label}
           </button>

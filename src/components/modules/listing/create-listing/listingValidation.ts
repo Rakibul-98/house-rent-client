@@ -1,6 +1,9 @@
 import { z } from "zod";
 
 export const listingValidationSchema = z.object({
+  propertyTitle: z.string().min(5).max(100),
+  areaSize: z.number().positive(),
+  houseType: z.enum(["Apartment", "Duplex", "Single Family", "Shared Room", "Penthouse"]),
   rentalHouseLocation: z
     .string()
     .min(1, "Rental house location is required")

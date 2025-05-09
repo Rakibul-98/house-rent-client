@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
+import Title from "@/components/home/Shared/Title";
 
 const AllListingPage = ({
   data,
@@ -71,6 +72,14 @@ const AllListingPage = ({
 
   const columns: ColumnDef<listingType>[] = [
     {
+      accessorKey: "propertyTitle",
+      header: "Title",
+    },
+    {
+      accessorKey: "houseType",
+      header: "Type",
+    },
+    {
       accessorKey: "rentalHouseLocation",
       header: "Location",
     },
@@ -127,7 +136,7 @@ const AllListingPage = ({
   return (
     <div>
       <div className="flex justify-between items-center mb-4 gap-5">
-        <h3 className="font-bold text-xl">Lists</h3>
+        <Title title="All Listings" />
         <Input
           type="text"
           placeholder="Search by location..."

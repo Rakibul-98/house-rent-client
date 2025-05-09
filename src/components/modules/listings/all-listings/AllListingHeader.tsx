@@ -43,7 +43,6 @@ const AllListingsHeader: React.FC<AllListingsHeaderProps> = ({
 
   return (
     <div className="space-y-5">
-      {/* Search */}
       <div>
         <label className="font-medium block mb-1">Search by location</label>
         <Input
@@ -56,7 +55,6 @@ const AllListingsHeader: React.FC<AllListingsHeaderProps> = ({
         />
       </div>
 
-      {/* Rent Range */}
       <div>
         <label className="font-medium block mb-1">
           Rent Range (${rentRange[0]} - ${rentRange[1]})
@@ -73,7 +71,6 @@ const AllListingsHeader: React.FC<AllListingsHeaderProps> = ({
         />
       </div>
 
-      {/* Bedrooms Range */}
       <div>
         <label className="font-medium block mb-1">
           Bedrooms ({bedroomsRange[0]} - {bedroomsRange[1]})
@@ -90,9 +87,7 @@ const AllListingsHeader: React.FC<AllListingsHeaderProps> = ({
         />
       </div>
 
-      {/* Sort Options */}
       <div className="space-y-3">
-        {/* Price Sorting */}
         <div>
           <p className="font-medium mb-1">Price</p>
           <div className="flex gap-2">
@@ -119,7 +114,6 @@ const AllListingsHeader: React.FC<AllListingsHeaderProps> = ({
           </div>
         </div>
 
-        {/* Bedrooms Sorting */}
         <div>
           <p className="font-medium mb-1">Bedrooms</p>
           <div className="flex gap-2">
@@ -146,7 +140,6 @@ const AllListingsHeader: React.FC<AllListingsHeaderProps> = ({
           </div>
         </div>
 
-        {/* Date Sorting */}
         <div>
           <p className="font-medium mb-1">Date</p>
           <div className="flex gap-2">
