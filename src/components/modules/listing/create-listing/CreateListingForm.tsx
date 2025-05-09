@@ -46,6 +46,7 @@ export default function CreateListingForm() {
       setImageError(true);
       return;
     }
+    console.log(data);
     try {
       const res = await createListing({ ...data, rentalImages: imageFiles });
       if (res?.success) {
@@ -85,7 +86,6 @@ export default function CreateListingForm() {
                     placeholder="e.g. Cozy 2-bedroom in city center"
                   />
                 </FormControl>
-                
               </FormItem>
             )}
           />
@@ -93,17 +93,18 @@ export default function CreateListingForm() {
           <FormField
             control={form.control}
             name="areaSize"
+            
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Area Size (sq ft)</FormLabel>
                 <FormControl>
                   <Input
+                  type="number"
                     {...field}
                     onChange={(e) => field.onChange(Number(e.target.value))}
                     placeholder="Enter property size"
                   />
                 </FormControl>
-                
               </FormItem>
             )}
           />

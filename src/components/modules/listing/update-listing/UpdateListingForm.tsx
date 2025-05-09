@@ -121,7 +121,6 @@ export default function UpdateListingForm({
                 <FormControl>
                   <Input
                     {...field}
-                    type="number"
                     onChange={(e) => field.onChange(Number(e.target.value))}
                     placeholder="Enter property size"
                   />

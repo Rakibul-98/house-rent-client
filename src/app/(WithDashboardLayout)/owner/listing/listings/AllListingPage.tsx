@@ -32,7 +32,6 @@ const AllListingPage = ({
   const router = useRouter();
 
   const userListings = data.filter((listing) => listing.owner.email === user?.email);
-  console.log(userListings);
   const numOfPage = Math.ceil(userListings.length / 9);
 
   const filteredData = userListings.filter((listing) =>
