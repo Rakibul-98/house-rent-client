@@ -1,4 +1,4 @@
-import WelcomePage from "@/components/modules/dashboard/content/WelcomePage";
+import WelcomePage from "@/components/modules/dashboard/content/DashboardOverviewPage";
 import { Hourglass, Send } from "lucide-react";
 import React from "react";
 

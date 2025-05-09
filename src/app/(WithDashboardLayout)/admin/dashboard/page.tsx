@@ -1,33 +1,24 @@
-import WelcomePage from "@/components/modules/dashboard/content/WelcomePage";
-import { Settings, User } from "lucide-react";
+import AdminOverview from "@/components/modules/dashboard/content/AdminOverview";
+import { getAllListing } from "@/services/Listing";
+import { getAllRequests } from "@/services/request";
+import { getAllUsers } from "@/services/Users";
 import React from "react";
 
-const AdminDashboard = () => {
-  const content = {
-    title: "Admin Dashboard",
-    description:
-      "Manage users, requests, and system settings. Ensure smooth operations.",
-    actions: [
-      {
-        icon: <User />,
-        title: "Manage Users",
-        description: "View and manage all users in the system."
-      },
-      {
-        icon: <Settings />,
-        title: "System Settings",
-        description: "Configure system-wide settings and preferences."
-      },
-    ],
-  };
+const AdminDashboard = async () => {
+  const { data: requests } = await getAllRequests(undefined);
+  const { data: listings } = await getAllListing(undefined);
+  const { data: users } = await getAllUsers();
 
   return (
     <div>
       <title>Dashboard - Admin</title>
-      <WelcomePage content={content} />
+      <AdminOverview
+        users={users || []}
+        requests={requests?.result || []}
+        listings={listings?.result || []}
+      />
     </div>
   );
-}
-
+};
 
 export default AdminDashboard;

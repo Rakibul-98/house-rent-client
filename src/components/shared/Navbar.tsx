@@ -22,6 +22,7 @@ import { LogOut } from "lucide-react";
 // import { getSearchResult } from "@/services/Listing";
 import Image from "next/image";
 import logo from "../../assets/hf logo.png";
+import React from "react";
 
 export default function Navbar() {
   const { user, setIsLoading } = useUser();
@@ -91,51 +92,52 @@ export default function Navbar() {
         <nav className="space-x-4 text-white">
           {links.map(({ name, path }) => {
             const isActive = pathname === path;
-            return (
-              <>
-                {name === "Location" ? (
-                  <DropdownMenu>
-                    <DropdownMenuTrigger
-                      className={`px-1 border-black hover:border-b-3 focus:outline-none focus-visible:ring-0 focus-visible:outline-none ${
-                        isActive && "text-black border-b-3 font-medium"
-                      }`}
-                    >
-                      {name}
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="grid grid-cols-3 gap-6 p-4 w-auto bg-gray-100">
-                      {divisions.map(({ name, cities }) => (
-                        <div key={name}>
-                          <DropdownMenuLabel className="text-lg border-b-3 border-[#5274b8] w-fit pb-0 mb-1">{name}</DropdownMenuLabel>
-                          {cities.map((city) => (
-                            <DropdownMenuItem key={city}>
-                              <Link
-                                href={`/location/${name.toLowerCase()}/${city
-                                  .toLowerCase()
-                                  .replace(/[\s']/g, "-")}`}
-                              >
-                                {city}
-                              </Link>
-                            </DropdownMenuItem>
-                          ))}
-                        </div>
-                      ))}
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                ) : (
-                  <Link
-                    className={`px-1 border-black hover:border-b-3 ${
+            return name === "Location" ? (
+              <React.Fragment key={name}>
+                <DropdownMenu>
+                  <DropdownMenuTrigger
+                    className={`px-1 border-black hover:border-b-3 focus:outline-none focus-visible:ring-0 focus-visible:outline-none ${
                       isActive && "text-black border-b-3 font-medium"
                     }`}
-                    href={path}
-                    key={name}
                   >
                     {name}
-                  </Link>
-                )}
-              </>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="grid grid-cols-3 gap-6 p-4 w-auto bg-gray-100">
+                    {divisions.map(({ name, cities }) => (
+                      <div key={name}>
+                        <DropdownMenuLabel className="text-lg border-b-3 border-[#5274b8] w-fit pb-0 mb-1">
+                          {name}
+                        </DropdownMenuLabel>
+                        {cities.map((city) => (
+                          <DropdownMenuItem key={city}>
+                            <Link
+                              href={`/location/${name.toLowerCase()}/${city
+                                .toLowerCase()
+                                .replace(/[\s']/g, "-")}`}
+                            >
+                              {city}
+                            </Link>
+                          </DropdownMenuItem>
+                        ))}
+                      </div>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </React.Fragment>
+            ) : (
+              <Link
+                key={name}
+                className={`px-1 border-black hover:border-b-3 ${
+                  isActive && "text-black border-b-3 font-medium"
+                }`}
+                href={path}
+              >
+                {name}
+              </Link>
             );
           })}
         </nav>
+
         {/* <div className="flex justify-center text-white">
             <Input
               type="text"

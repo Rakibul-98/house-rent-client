@@ -1,4 +1,4 @@
-import WelcomePage from '@/components/modules/dashboard/content/WelcomePage'
+import WelcomePage from '@/components/modules/dashboard/content/DashboardOverviewPage'
 import { FileText, View } from 'lucide-react'
 import React from 'react'
 

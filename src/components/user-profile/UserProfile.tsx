@@ -20,6 +20,7 @@ import { userType } from "@/types/types";
 import { Badge } from "../ui/badge";
 import profileBannerImg from "../../assets/svg/profileBannerImg.svg";
 import { useUser } from "@/context/UserContext";
+import img from '../../assets/images/profile-banner.jpg';
 
 export default function UserProfile({ user }: { user: userType }) {
   const { setIsLoading } = useUser();
@@ -127,203 +128,214 @@ export default function UserProfile({ user }: { user: userType }) {
   };
 
   return (
-    <div className="my-10 min-h-[80vh] flex items-center justify-center gap-10">
-      <Image
-        className="hidden lg:block"
-        src={profileBannerImg}
-        alt="House Rent Logo"
-        width={500}
-        height={500}
-      />
-      <div className="max-w-sm w-full p-5 shadow-2xl rounded-lg">
-        <div className="relative mx-auto w-30 h-30">
-          <Image
-            src={profileImage}
-            height={100}
-            width={100}
-            alt="User Avatar"
-            className="w-full h-full rounded-full border-4 border-teal-500"
-          />
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-            className="hidden"
-            id="profile-image-upload"
-          />
-          <label
-            htmlFor="profile-image-upload"
-            className="absolute bottom-1 right-1 bg-teal-600 text-white p-1 rounded-full cursor-pointer"
-          >
-            <Edit size={16} />
-          </label>
-        </div>
-
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="mt-4 space-y-4"
-          >
-            <FormField
-              control={form.control}
-              name="user_name"
-              render={({ field }) => (
-                <FormItem className="flex items-center">
-                  <FormLabel className="font-bold">Name:</FormLabel>
-                  <div className="flex items-center justify-between gap-2 w-full">
-                    {isEditing.user_name ? (
-                      <FormControl>
-                        <Input
-                          type="text"
-                          {...field}
-                          placeholder="Enter user name"
-                        />
-                      </FormControl>
-                    ) : (
-                      <span className="w-full">{user.user_name}</span>
-                    )}
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setIsEditing((prev) => ({
-                          ...prev,
-                          user_name: !prev.user_name,
-                        }))
-                      }
-                    >
-                      {isEditing.user_name ? <X /> : <Edit3 />}
-                    </button>
-                  </div>
-                  <FormMessage />
-                </FormItem>
-              )}
+    <div>
+      {/* <div className="relative h-[50vh] w-full">
+        <Image src={img} fill alt="banner-img" className="object-cover object-bottom h-[80vh]" />
+        <div className="absolute inset-0 bg-black/10" />
+      </div> */}
+      <div className="h-[20vh]">
+        <Image className="w-full object-cover h-[55vh] " src={img} alt="" />
+      </div>
+      <div className="flex items-center justify-center gap-10 pb-10">
+        <Image
+          className="hidden lg:block"
+          src={profileBannerImg}
+          alt="House Rent Logo"
+          width={500}
+          height={500}
+        />
+        <div className="max-w-sm bg-white w-full p-5 shadow-2xl rounded-lg">
+          <div className="relative mx-auto w-30 h-30">
+            <Image
+              src={profileImage}
+              height={100}
+              width={100}
+              alt="User Avatar"
+              className="w-full h-full rounded-full border-4 border-teal-500"
             />
-
-            <FormField
-              control={form.control}
-              name="phone_num"
-              render={({ field }) => (
-                <FormItem className="flex items-center">
-                  <FormLabel className="font-bold">Phone:</FormLabel>
-                  <div className="flex items-center justify-between gap-2 w-full">
-                    {isEditing.phone_num ? (
-                      <FormControl>
-                        <Input
-                          type="text"
-                          {...field}
-                          placeholder="Enter phone number"
-                        />
-                      </FormControl>
-                    ) : (
-                      <span className="w-full">{user.phone_num}</span>
-                    )}
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setIsEditing((prev) => ({
-                          ...prev,
-                          phone_num: !prev.phone_num,
-                        }))
-                      }
-                    >
-                      {isEditing.phone_num ? <X /> : <Edit3 />}
-                    </button>
-                  </div>
-                  <FormMessage />
-                </FormItem>
-              )}
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="hidden"
+              id="profile-image-upload"
             />
+            <label
+              htmlFor="profile-image-upload"
+              className="absolute bottom-1 right-1 bg-teal-600 text-white p-1 rounded-full cursor-pointer"
+            >
+              <Edit size={16} />
+            </label>
+          </div>
 
-            <div className="text-left space-y-2 text-gray-700">
-              <p>
-                <strong>Email:</strong> {user.email}
-              </p>
-              <p className="capitalize">
-                <strong>Role:</strong> {user.role}
-              </p>
-              <p>
-                <strong className="me-2">Status:</strong>{" "}
-                {user?.isBlocked ? (
-                  <Badge className="outline-red-500 text-white outline bg-red-500">
-                    Blocked
-                  </Badge>
-                ) : (
-                  <Badge className="outline-green-500 text-white outline bg-green-500">
-                    Active
-                  </Badge>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="mt-4 space-y-4"
+            >
+              <FormField
+                control={form.control}
+                name="user_name"
+                render={({ field }) => (
+                  <FormItem className="flex items-center">
+                    <FormLabel className="font-bold">Name:</FormLabel>
+                    <div className="flex items-center justify-between gap-2 w-full">
+                      {isEditing.user_name ? (
+                        <FormControl>
+                          <Input
+                            type="text"
+                            {...field}
+                            placeholder="Enter user name"
+                          />
+                        </FormControl>
+                      ) : (
+                        <span className="w-full">{user.user_name}</span>
+                      )}
+                      <button
+                        type="button"
+                        className="cursor-pointer"
+                        onClick={() =>
+                          setIsEditing((prev) => ({
+                            ...prev,
+                            user_name: !prev.user_name,
+                          }))
+                        }
+                      >
+                        {isEditing.user_name ? <X /> : <Edit3 />}
+                      </button>
+                    </div>
+                    <FormMessage />
+                  </FormItem>
                 )}
-              </p>
-            </div>
+              />
 
-            {(isEditing.user_name ||
-              isEditing.profile_image ||
-              isEditing.phone_num) && (
-              <Button type="submit" className="w-full mt-4">
-                <Save className="mr-2" />
-                {isSubmitting ? "Updating..." : "Update"}
-              </Button>
-            )}
-          </form>
-        </Form>
+              <FormField
+                control={form.control}
+                name="phone_num"
+                render={({ field }) => (
+                  <FormItem className="flex items-center">
+                    <FormLabel className="font-bold">Phone:</FormLabel>
+                    <div className="flex items-center justify-between gap-2 w-full">
+                      {isEditing.phone_num ? (
+                        <FormControl>
+                          <Input
+                            type="text"
+                            {...field}
+                            placeholder="Enter phone number"
+                          />
+                        </FormControl>
+                      ) : (
+                        <span className="w-full">{user.phone_num}</span>
+                      )}
+                      <button
+                        type="button"
+                        className="cursor-pointer"
+                        onClick={() =>
+                          setIsEditing((prev) => ({
+                            ...prev,
+                            phone_num: !prev.phone_num,
+                          }))
+                        }
+                      >
+                        {isEditing.phone_num ? <X /> : <Edit3 />}
+                      </button>
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-        <div className="mt-6">
-          <Button
-            onClick={() => setIsChangingPassword(!isChangingPassword)}
-            className="w-full"
-          >
-            {isChangingPassword ? <X /> : <Lock />}
-            {isChangingPassword ? "Close Change" : "Change Password"}
-          </Button>
-
-          {isChangingPassword && (
-            <Form {...passwordForm}>
-              <form
-                onSubmit={passwordForm.handleSubmit(onSubmitPassword)}
-                className="mt-4 space-y-4"
-              >
-                <FormField
-                  control={passwordForm.control}
-                  name="oldPassword"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Old Password</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="password"
-                          {...field}
-                          placeholder="Old Password"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
+              <div className="text-left space-y-2 text-gray-700">
+                <p>
+                  <strong>Email:</strong> {user.email}
+                </p>
+                <p className="capitalize">
+                  <strong>Role:</strong> {user.role}
+                </p>
+                <p>
+                  <strong className="me-2">Status:</strong>{" "}
+                  {user?.isBlocked ? (
+                    <Badge className="outline-red-500 text-white outline bg-red-500">
+                      Blocked
+                    </Badge>
+                  ) : (
+                    <Badge className="outline-green-500 text-white outline bg-green-500">
+                      Active
+                    </Badge>
                   )}
-                />
+                </p>
+              </div>
 
-                <FormField
-                  control={passwordForm.control}
-                  name="newPassword"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>New Password</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="password"
-                          {...field}
-                          placeholder="New Password"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <Button type="submit" className="w-full">
+              {(isEditing.user_name ||
+                isEditing.profile_image ||
+                isEditing.phone_num) && (
+                <Button type="submit" className="w-full mt-4">
                   <Save className="mr-2" />
-                  {isSubmitting ? "Updating..." : "Submit"}
+                  {isSubmitting ? "Updating..." : "Update"}
                 </Button>
-              </form>
-            </Form>
-          )}
+              )}
+            </form>
+          </Form>
+
+          <div className="mt-6">
+            <Button
+              onClick={() => setIsChangingPassword(!isChangingPassword)}
+              className="w-full"
+            >
+              {isChangingPassword ? <X /> : <Lock />}
+              {isChangingPassword ? "Close Change" : "Change Password"}
+            </Button>
+
+            {isChangingPassword && (
+              <Form {...passwordForm}>
+                <form
+                  onSubmit={passwordForm.handleSubmit(onSubmitPassword)}
+                  className="mt-4 space-y-4"
+                >
+                  <FormField
+                    control={passwordForm.control}
+                    name="oldPassword"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Old Password</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="password"
+                            {...field}
+                            placeholder="Old Password"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={passwordForm.control}
+                    name="newPassword"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>New Password</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="password"
+                            {...field}
+                            placeholder="New Password"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <Button type="submit" className="w-full">
+                    <Save className="mr-2" />
+                    {isSubmitting ? "Updating..." : "Submit"}
+                  </Button>
+                </form>
+              </Form>
+            )}
+          </div>
         </div>
       </div>
     </div>

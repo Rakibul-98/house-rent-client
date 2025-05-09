@@ -62,7 +62,7 @@ const DisplayListingModal = ({
         </div>
 
         <div className="mt-2 space-y-4">
-          <p>{listing?.house_description}</p>
+          <p>{listing?.propertyTitle}</p>
           <div className="flex justify-between">
             <p className="flex gap-1">
                 <MapPin />

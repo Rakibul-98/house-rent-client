@@ -45,7 +45,7 @@ export type requestType = {
   isDeleted?: boolean;
   listing: listingType;
   message: string;
-  paymentStatus: "active" | "inactive";
+  paymentStatus: "active" | "inactive" | "paid";
   phone: string;
   requestStatus: "pending" | "approved" | "rejected";
   tenant: userType;

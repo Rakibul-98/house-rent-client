@@ -47,7 +47,7 @@ const AllListingPage = ({
 
   const handleDelete = (data: listingType) => {
     setSelectedId(data?._id);
-    setSelectedName(data?.rentalHouseLocation);
+    setSelectedName(data?.propertyTitle);
     setDeleteModalOpen(true);
   };
 
@@ -72,6 +72,14 @@ const AllListingPage = ({
   };
 
   const columns: ColumnDef<listingType>[] = [
+    {
+      accessorKey: "propertyTitle",
+      header: "Title",
+    },
+    {
+      accessorKey: "houseType",
+      header: "Type",
+    },
     {
       accessorKey: "rentalHouseLocation",
       header: "Location",

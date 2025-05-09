@@ -7,7 +7,6 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -20,6 +19,9 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { createRequest } from "@/services/request";
 import { z } from "zod";
+import { Badge } from "@/components/ui/badge";
+import img from "../../../assets/images/req-banner.jpg";
+import Image from "next/image";
 
 type RequestFormData = z.infer<typeof requestValidationSchema>;
 
@@ -55,29 +57,68 @@ export default function RequestListing({ listing }: { listing: listingType }) {
     }
   };
 
+  const propertDetails = [
+    { label: "🏠 Title", value: listing?.propertyTitle },
+    { label: "📍 Location", value: listing?.rentalHouseLocation },
+    { label: "🏷️ Type", value: listing?.houseType },
+    { label: "📐 Area Size", value: `${listing?.areaSize} sq ft` },
+    { label: "🛏️ Bedrooms", value: listing?.numberOfBedrooms },
+    { label: "💰 Rent", value: `$${listing?.rentAmount}/mo` },
+    { label: "📅 Posted", value: `${listing?.createdAt}` },
+  ];
+
   return (
-    <div className="max-w-6xl mx-auto p-6">
-      <div className="flex flex-col md:flex-row gap-6">
-        {/* Left Column - Listing Info */}
-        <div className="w-full md:w-1/2 bg-white rounded-lg shadow-md p-6 space-y-4">
-          <h2 className="text-xl font-semibold text-gray-800">Listing Details</h2>
-          <div>
-            <p><span className="font-medium text-gray-600">Location:</span> {listing.rentalHouseLocation}</p>
-            <p><span className="font-medium text-gray-600">Rent:</span> ${listing.rentAmount}</p>
-            <p><span className="font-medium text-gray-600">Bedrooms:</span> {listing.numberOfBedrooms}</p>
-            {/* <p><span className="font-medium text-gray-600">Bathrooms:</span> {listing.bathrooms}</p> */}
-            {/* <p><span className="font-medium text-gray-600">Size:</span> {listing.squareFeet} sqft</p> */}
-            {/* <p><span className="font-medium text-gray-600">Type:</span> {listing.houseType}</p> */}
+    <div className="">
+      <div className="relative h-[25vh] w-full overflow-hidden">
+        <Image src={img} fill alt="banner-img" className="object-cover" />
+        <div className="absolute inset-0 bg-black/10" />
+      </div>
+
+      <div className="w-[90%] mx-auto flex flex-col items-start md:flex-row gap-6 mt-10">
+        <div className="w-full md:w-1/2 lg:w-2/3 rounded-md shadow-md p-6 space-y-3">
+          <h2 className="text-2xl font-semibold font-serif mb-4 border-b-4 border-[#5274b8] w-fit">
+          Property Details
+          </h2>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-3 gap-x-5 text-sm sm:text-base items-start">
+            {propertDetails.map(({ label, value }, i) => (
+              <div key={i} className="flex gap-5 md:gap-2">
+                <span className="font-medium w-28">{label}:</span>
+                {label === "📅 Posted" ? (
+                  <span>{new Date(value).toLocaleDateString()}</span>
+                ) : (
+                  <span>{value || "N/A"}</span>
+                )}
+              </div>
+            ))}
+
+            <div className="flex gap-2 items-start lg:col-span-2">
+              <p className="font-medium whitespace-nowrap">📝 Description:</p>
+              <p>{listing.house_description}</p>
+            </div>
+
+            <div className="flex gap-2 items-start lg:col-span-2">
+              <span className="font-medium w-28">Features:</span>
+              <div className="flex flex-wrap gap-2">
+                {listing?.features?.length ? (
+                  listing.features.map((feature, index) => (
+                    <Badge key={index} variant="secondary">
+                      {feature}
+                    </Badge>
+                  ))
+                ) : (
+                  <span className="text-gray-500 italic">
+                    No features listed
+                  </span>
+                )}
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Right Column - Form */}
-        <div className="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-2xl font-semibold mb-4">
-            Make a request for{" "}
-            <span className="italic text-amber-500">
-              {listing.rentalHouseLocation}
-            </span>
+        <div className="w-full md:w-1/2 lg:w-1/3 bg-white p-6 rounded-md shadow-md">
+          <h2 className="text-2xl font-semibold font-serif mb-4 border-b-4 border-[#5274b8] w-fit">
+            Make a request
           </h2>
 
           <Form {...form}>
@@ -95,12 +136,9 @@ export default function RequestListing({ listing }: { listing: listingType }) {
                         className="bg-gray-100"
                         readOnly
                         {...field}
-                        onChange={(e) =>
-                          field.onChange(Number(e.target.value))
-                        }
+                        onChange={(e) => field.onChange(Number(e.target.value))}
                       />
                     </FormControl>
-                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -114,7 +152,6 @@ export default function RequestListing({ listing }: { listing: listingType }) {
                     <FormControl>
                       <Input type="tel" {...field} />
                     </FormControl>
-                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -128,12 +165,11 @@ export default function RequestListing({ listing }: { listing: listingType }) {
                     <FormControl>
                       <Textarea rows={4} {...field} />
                     </FormControl>
-                    <FormMessage />
                   </FormItem>
                 )}
               />
 
-              <Button type="submit" className="w-full">
+              <Button type="submit" className="w-full cursor-pointer">
                 {isSubmitting ? "Submitting..." : "Submit Request"}
               </Button>
             </form>

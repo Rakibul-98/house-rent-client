@@ -4,7 +4,7 @@ import * as React from "react";
 import {
   Building,
   GitPullRequestArrow,
-  MapPinHouse,
+  HouseIcon,
   Settings,
   SquareTerminal,
   User,
@@ -23,12 +23,19 @@ import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
 import Link from "next/link";
 import { useUser } from "@/context/UserContext";
+import logo from "../../././../../assets/hf logo.png";
+import Image from "next/image";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user } = useUser();
 
   const data = {
     navMain: [
+      {
+        title: "Home",
+        url: `/`,
+        icon: HouseIcon,
+      },
       {
         title: "Dashboard",
         url: `/${user?.role}/dashboard`,
@@ -79,7 +86,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           },
         ],
       },
-    ]
+    ],
   };
 
   return (
@@ -89,12 +96,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
               <Link href="/">
-                <div className="flex items-center justify-center">
-                <MapPinHouse className="size-8 text-blue-500 " />
-                </div>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <h2 className="font-bold text-xl">House Rent</h2>
-                </div>
+                <Image
+                  src={logo}
+                  alt="Modern Apartment"
+                  className="h-full w-auto"
+                />
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>

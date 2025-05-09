@@ -21,7 +21,28 @@ export const createRequest = async (data: FieldValues) => {
     }
 }
 
-export const getAllRequests = async (page?:string) => {
+export const getSingleRequest = async (requestId: string): Promise<any> => {
+    try {
+        const res = await fetch(
+            `${process.env.NEXT_PUBLIC_BASE_API}/requests/${requestId}`,
+            {
+                headers: {
+                    'Authorization': (await cookies()).get("accessToken")!.value,
+                },
+                next: {
+                    tags: ["requests"],
+                },
+            }
+        );
+        return res.json();
+    } catch (error: any) {
+        return Error(error);
+    }
+};
+
+
+
+export const getAllRequests = async (page?: string) => {
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/requests?page=${page}`, {
             headers: {
@@ -40,7 +61,7 @@ export const getAllRequests = async (page?:string) => {
 
 export const updateRequestStatus = async (requestId: string, data: string): Promise<any> => {
 
-    const modifiedData = {"requestStatus":data};
+    const modifiedData = { "requestStatus": data };
     try {
         const res = await fetch(
             `${process.env.NEXT_PUBLIC_BASE_API}/requests/${requestId}`,

@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import DeleteConfirmationModal from "@/components/ui/core/HRModal/deleteConfirmationModal";
-import DisplayRequestModal from "@/components/ui/core/HRModal/displayRequestModal";
 import UpdateRequestStatusModal from "@/components/ui/core/HRModal/updateRequestStatusModal";
 import { HRTable } from "@/components/ui/core/HRTable";
 import TablePagination from "@/components/ui/core/HRTable/TablePagination";
@@ -20,6 +19,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useUser } from "@/context/UserContext";
+import Title from "@/components/home/Shared/Title";
+import { useRouter } from "next/navigation";
 
 const AllRequestsPage = ({
   data,
@@ -30,14 +31,12 @@ const AllRequestsPage = ({
 }) => {
   const { user } = useUser();
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [isRequestModalOpen, setRequestModalOpen] = useState(false);
   const [isRequestUpdateModalOpen, setRequestUpdateModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedName, setSelectedName] = useState<string | null>(null);
-  const [selectedRequest, setSelectedRequest] = useState<requestType | null>(
-    null
-  );
   const [filterStatus, setFilterStatus] = useState<string>("all");
+    const router = useRouter();
+  
 
   const filteredData =
     filterStatus === "all"
@@ -45,13 +44,12 @@ const AllRequestsPage = ({
       : data.filter((request) => request.requestStatus === filterStatus);
 
   const handleView = (data: requestType) => {
-    setSelectedRequest(data);
-    setRequestModalOpen(true);
+    router.push(`/admin/requestDetails/${data._id}`);
   };
 
   const handleDelete = (data: requestType) => {
     setSelectedId(data?._id);
-    setSelectedName(data?.listing?.rentalHouseLocation);
+    setSelectedName(data?.listing?.propertyTitle);
     setDeleteModalOpen(true);
   };
 
@@ -160,7 +158,7 @@ const AllRequestsPage = ({
     <div>
       <div className="min-h-[calc(100vh-200px)]">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="font-bold text-xl">Requests</h3>
+          <Title title="All Requests" />
           <Select onValueChange={(value) => setFilterStatus(value)}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Filter by status" />
@@ -190,13 +188,6 @@ const AllRequestsPage = ({
         onOpenChange={setRequestUpdateModalOpen}
         onConfirm={handleUpdateRequestStatusConfirm}
       />
-      {selectedRequest && (
-        <DisplayRequestModal
-          isOpen={isRequestModalOpen}
-          onClose={() => setRequestModalOpen(false)}
-          request={selectedRequest}
-        />
-      )}
     </div>
   );
 };

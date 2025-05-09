@@ -9,7 +9,7 @@ import { verifyPayment } from "@/services/payment";
 import { toast } from "sonner";
 import { Suspense } from "react";
 
-const PaymentSuccessPageContent = () => {
+const PaymentSuccessPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -32,41 +32,42 @@ const PaymentSuccessPageContent = () => {
   }, [searchParams]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
-      <title>Payment Success - House Finder</title>
-      <div className="bg-white p-8 rounded-lg shadow-lg text-center max-w-md w-full">
-        <div className="flex justify-center">
-          <Image
-            src={successImg}
-            alt="Payment Successful"
-            width={300}
-            height={300}
-          />
-        </div>
-
-        <h1 className="text-3xl font-bold mt-6">Payment Successful!</h1>
-        <p className="text-gray-600 mt-4">
-          Thank you for your payment. Your transaction has been completed
-          successfully.
-        </p>
-
-        <p className="text-lg text-gray-700 mt-4">Have a great day! 🎉</p>
-
-        <Button
-          onClick={() => router.push("/")}
-          className="mt-6 w-full bg-green-500 hover:bg-green-600"
-        >
-          Back to Home
-        </Button>
-      </div>
-    </div>
-  );
-};
-
-const PaymentSuccessPage = () => {
-  return (
     <Suspense fallback={<div>Loading...</div>}>
-      <PaymentSuccessPageContent />
+      <div className="lg:w-[90%] mx-auto">
+        <div className="min-h-screen flex flex-col lg:flex-row relative">
+          <title>Login - House Finder</title>
+
+          <div className="absolute inset-0 lg:relative lg:w-1/2">
+            <Image
+              src={successImg}
+              alt="House Rent Logo"
+              fill
+              className="object-cover lg:object-contain"
+              priority
+            />
+            <div className="absolute inset-0 bg-black/50 lg:hidden" />
+          </div>
+
+          <div className="relative z-10 min-h-screen flex items-center justify-center w-full lg:w-1/2 my-5 lg:my-0">
+            <div className="rounded-md text-center max-w-md bg-white/85 p-5 shadow-2xl px-10">
+              <h1 className="text-3xl font-bold mt-6">Payment Successful!</h1>
+              <p className="mt-4 leading-6">
+                Thank you for your payment. <br /> Your transaction has been completed successfully. Now you can contact the owner.
+              </p>
+
+              <p className="text-lg mt-4">Have a great day! 🎉</p>
+
+              <Button
+              variant="default"
+                onClick={() => router.push("/")}
+                className="mt-6 w-full"
+              >
+                Back to Home
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
     </Suspense>
   );
 };
