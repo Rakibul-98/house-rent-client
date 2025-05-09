@@ -47,17 +47,17 @@ House Finder is a modern, responsive platform for finding and listing homes, fea
 
 ## Screenshots
 
-![Homepage](https://i.ibb.co.com/Lzf71z7w/hr-banner.png
+![Homepage](https://i.ibb.co.com/L3sBssq/home.png
 )
-![listing](https://i.ibb.co.com/5XkQwRWP/listin-details.png
+![listing](https://i.ibb.co.com/gM6Cpk1R/listings.png
 )
-![userProfile](https://i.ibb.co.com/8gngQ4qx/user-profile.png
+![userProfile](https://i.ibb.co.com/KT8BD2G/profile-2.png
 )
-![Admin panel](https://i.ibb.co.com/Vp069bH9/admin-dashboard.png
+![Admin panel](https://i.ibb.co.com/j9w1YP8d/admin-dashboard.png
 )
 ![Admin panel2](https://i.ibb.co.com/4nqMChyk/dashboard-2.png
 )
-![create](https://i.ibb.co.com/9HQWdVXK/create-listing.png
+![details](https://i.ibb.co.com/1fYcvBcY/details.png
 )
 
 
