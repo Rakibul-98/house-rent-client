@@ -3,12 +3,26 @@
 import ListingCard from "@/components/ui/core/HRCard";
 import { listingType } from "@/types/types";
 import AllListingsHeader from "./AllListingHeader";
-import { useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const AllListings = ({ data }: { data: listingType[] }) => {
   const [filteredData, setFilteredData] = useState(data);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const location = searchParams.get("location");
+  const city = searchParams.get("city");
+
+  useEffect(() => {
+    if (location && city) {
+      const filtered = data.filter(
+        (listing) =>
+          listing.rentalHouseLocation.toLowerCase().includes(city.toLowerCase()) &&
+          listing.rentalHouseLocation.toLowerCase().includes(location.toLowerCase())
+      );
+      setFilteredData(filtered);
+    }
+  }, [data, location, city]);
 
   const handleViewDetails = (listingId: string) => {
     router.push(`/listing-details/${listingId}`);
@@ -89,7 +103,7 @@ const AllListings = ({ data }: { data: listingType[] }) => {
   }, [data]);
 
   return (
-    <div className="w-[90%] mx-auto mt-5 flex gap-5">
+    <div className="w-[90%] min-h-[80vh] mx-auto mt-5 flex gap-5">
       <div className=" shadow rounded-lg p-4 h-fit">
         <AllListingsHeader
           onSearch={handleSearch}
@@ -105,7 +119,7 @@ const AllListings = ({ data }: { data: listingType[] }) => {
 
       <div className="flex-1">
         {filteredData.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-96">
+          <div className="flex flex-col items-center justify-center min-h-[80vh]">
             <p className="text-xl text-gray-600">No listings found.</p>
             <p className="text-sm text-gray-500">
               Try another location or adjust your filters.

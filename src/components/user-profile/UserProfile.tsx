@@ -129,10 +129,6 @@ export default function UserProfile({ user }: { user: userType }) {
 
   return (
     <div>
-      {/* <div className="relative h-[50vh] w-full">
-        <Image src={img} fill alt="banner-img" className="object-cover object-bottom h-[80vh]" />
-        <div className="absolute inset-0 bg-black/10" />
-      </div> */}
       <div className="h-[20vh]">
         <Image className="w-full object-cover h-[55vh] " src={img} alt="" />
       </div>

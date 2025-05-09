@@ -34,7 +34,7 @@ export default function Navbar() {
     { name: "Location", path: "/location" },
     { name: "About Us", path: "/about" },
     { name: "Contact", path: "/contact" },
-    { name: "FAQs", path: "/faqs" },
+    { name: "Terms", path: "/terms" },
   ];
 
   const divisions = [
@@ -97,9 +97,8 @@ export default function Navbar() {
                       {cities.map((city) => (
                         <DropdownMenuItem key={city}>
                           <Link
-                            href={`/location/${name.toLowerCase()}/${city
-                              .toLowerCase()
-                              .replace(/[\s']/g, "-")}`}
+                            href={`/listings?location=${name.toLowerCase()}&city=${city.toLowerCase()}`}
+                            onClick={() => setMobileMenuOpen(false)}
                           >
                             {city}
                           </Link>
@@ -181,15 +180,13 @@ export default function Navbar() {
                       <DropdownMenuContent className="w-64 p-2 grid grid-cols-2 gap-4">
                         {divisions.map(({ name, cities }) => (
                           <div key={name}>
-                            <DropdownMenuLabel className=" font-bold mb-1">
+                            <DropdownMenuLabel className="text-lg border-b-2 border-[#5274b8] w-fit pb-0 mb-1">
                               {name}
                             </DropdownMenuLabel>
                             {cities.map((city) => (
                               <DropdownMenuItem key={city}>
                                 <Link
-                                  href={`/location/${name.toLowerCase()}/${city
-                                    .toLowerCase()
-                                    .replace(/[\s']/g, "-")}`}
+                                  href={`/listings?location=${name.toLowerCase()}&city=${city.toLowerCase()}`}
                                   onClick={() => setMobileMenuOpen(false)}
                                 >
                                   {city}
