@@ -7,7 +7,7 @@ const TenantDashboard = async () => {
 
   return (
     <div>
-      <TenantOverview requests={requests.result} />
+      <TenantOverview requests={requests?.result} />
     </div>
   );
 };
