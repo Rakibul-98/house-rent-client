@@ -38,7 +38,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
         </div>
 
         <div className="p-3 space-y-1">
-          <h3 className="text-lg font-semibold flex gap-2 line-clamp-1">
+          <h3 className="text-lg font-semibold flex gap-2 truncate">
             <Building2 />
             {listing?.rentalHouseLocation}
           </h3>

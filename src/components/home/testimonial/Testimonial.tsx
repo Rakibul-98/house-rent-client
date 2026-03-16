@@ -7,34 +7,30 @@ import Title from "../Shared/Title";
 const testimonials = [
   {
     id: 1,
-    name: "John Doe",
+    name: "Rafiqul Islam",
     role: "Tenant",
-    comment:
-      "This platform made finding my dream home so easy! The listings are accurate, and the process is seamless.",
+    comment: "This platform made finding my dream home so easy! The listings are accurate, and the process is seamless.",
     avatar: "https://i.ibb.co.com/5g8hrfBv/male-user-4.png",
   },
   {
     id: 2,
-    name: "Jane Smith",
+    name: "Farhana Akter",
     role: "Property Owner",
-    comment:
-      "Listing my property was a breeze, and I found a great tenant within days. Highly recommend!",
+    comment: "Listing my property was a breeze, and I found a great tenant within days. Highly recommend!",
     avatar: "https://i.ibb.co.com/KjQ6pm6g/fem-user-2.png",
   },
   {
     id: 3,
-    name: "Michael Johnson",
+    name: "Kamal Hossain",
     role: "Tenant",
-    comment:
-      "The search filters are fantastic, and the customer support team is very responsive. Great experience!",
+    comment: "The search filters are fantastic, and the customer support team is very responsive. Great experience!",
     avatar: "https://i.ibb.co.com/c5j3Tt7/male-user-6.png",
   },
   {
     id: 4,
-    name: "Emily Brown",
+    name: "Shamima Khatun",
     role: "Property Owner",
-    comment:
-      "I love how user-friendly the platform is. It saved me so much time and effort in managing my rentals.",
+    comment: "I love how user-friendly the platform is. It saved me so much time and effort in managing my rentals.",
     avatar: "https://i.ibb.co.com/8DZR4nvS/fem-user-1.png",
   },
 ];
